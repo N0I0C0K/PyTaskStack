@@ -70,10 +70,31 @@ class SessionCore:
         self.sessionDict[session_id].__dict__.update(data)
 
     def runSession(self, session_id: str):
-        if session_id not in self.sessionDict:
-            raise KeyError(f'{session_id} not in session dict')
+        assert session_id in self.sessionDict
         execUnit = ExecuteUnit(self.sessionDict[session_id])
         self.sessionDict[session_id].session_task = execUnit
+
+    def sessionFinished(self, session_id: str) -> bool:
+        '''
+        判断`session_id`是否运行完毕
+        '''
+        assert session_id in self.sessionDict
+        session = self.sessionDict[session_id]
+        assert session.session_task is not None
+        return session.session_task.finished()
+
+    def getSessionOutPut(self, session_id: str) -> Tuple[str, str]:
+        '''
+        获得`session_id`的输出, 如果还在 '运行' 则返回`('','')`, 如果不存在则抛出错误
+        :return :Tuple[stdout, stderr]
+        '''
+        assert session_id in self.sessionDict
+        session = self.sessionDict[session_id]
+        assert session.session_task is not None
+        task: ExecuteUnit = session.session_task
+        if not task.finished():
+            return ('', '')
+        return (task.stdout, task.stderr)
 
 
 def generateRsa():

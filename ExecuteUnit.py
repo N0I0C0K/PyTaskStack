@@ -17,7 +17,7 @@ class ExecuteUnit:
         pass
 
     def finished(self) -> bool:
-        return self.task.poll() is None
+        return self.task.poll() is not None
 
     def kill(self):
         self.task.kill()

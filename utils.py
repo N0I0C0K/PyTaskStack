@@ -9,7 +9,7 @@ class SessionInfo:
     session_id: str = None
     session_name: str = None
     session_command: str = None
-    session_task = None
+    session_task: 'ExecuteUnit' = None
 
     def __init__(self) -> None:
         '''
