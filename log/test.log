@@ -20,3 +20,10 @@ DEBUG:root:Address(host='127.0.0.1', port=16249)
 DEBUG:root:Address(host='127.0.0.1', port=16291)
 DEBUG:root:Address(host='127.0.0.1', port=16295)
 DEBUG:root:Address(host='127.0.0.1', port=16304)
+DEBUG:asyncio:Using selector: SelectSelector
+INFO:uvicorn.error:Started server process [18296]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Uvicorn running on http://0.0.0.0:5555 (Press CTRL+C to quit)
+DEBUG:root:Address(host='127.0.0.1', port=3711)
+DEBUG:root:Address(host='127.0.0.1', port=3732)

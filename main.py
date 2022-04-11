@@ -6,7 +6,8 @@ import uvicorn
 import logging
 
 app = FastAPI()
-logging.basicConfig(filename='test.log', level=logging.DEBUG, encoding='utf-8')
+logging.basicConfig(filename='./log/test.log',
+                    level=logging.DEBUG, encoding='utf-8')
 
 
 class SeeionForm(BaseModel):
@@ -35,6 +36,7 @@ async def push_session(form: SeeionForm, req: Request):
     logging.debug(req.client)
     if not sessionManager.verify(form.session_id, form.token):
         return {'code': 500, 'msg': '非法授权'}
+    sessionManager.updateSessionInfoByDict(form.session_id, form.dict())
     return {'code': 200}
 
 

@@ -3,10 +3,13 @@ import base64
 import os
 import secrets
 from typing import *
+from utils import *
+from collections import defaultdict
+from ExecuteUnit import ExecuteUnit
 
 
 class SessionCore:
-    sessionDict: Dict[str, dict] = None
+    sessionDict: Dict[str, SessionInfo] = None
     '''
     里面储存着所有session的授权信息
     `session_id`=>`{'session_id':'id','key':'key','token':'token'}`
@@ -17,7 +20,7 @@ class SessionCore:
         会话核心组件, 包括`session`的存储, 验证, 获取
         :param private_key: private key, 默认为`None`会读取AuthCore文件的目录下的`private_key`文件
         '''
-        self.sessionDict = dict()  # 储存session信息
+        self.sessionDict = defaultdict(SessionInfo)  # 储存session信息
         if private_key is None:
             key_path = os.path.dirname(__file__)+'\\private_key'
             if not os.path.exists(key_path):
@@ -41,7 +44,8 @@ class SessionCore:
         '''
         if session_id in self.sessionDict:
             return False
-        self.sessionDict[session_id] = {'session_id': session_id, 'key': key}
+        self.sessionDict[session_id].__dict__.update(
+            {'session_id': session_id, 'key': key})
         return True
 
     def verify(self, session_id, token: str) -> bool:
@@ -51,15 +55,25 @@ class SessionCore:
         if session_id not in self.sessionDict:
             return False
         _token = base64.b64decode(token)
-        session_info: Dict[str, Any] = self.sessionDict[session_id]
-        if 'token' not in session_info:
-            if rsa.decrypt(_token, self.__privateKey).decode() == session_info['key']:
-                session_info['token'] = token
+        session_info: SessionInfo = self.sessionDict[session_id]
+        if session_info.token is None:
+            if rsa.decrypt(_token, self.__privateKey).decode() == session_info.key:
                 return True
             else:
                 return False
         else:
-            return session_info['token'] == token
+            return session_info.token == token
+
+    def updateSessionInfoByDict(self, session_id: str, data: dict):
+        if session_id not in self.sessionDict:
+            raise KeyError(f'{session_id} not in sessionDict')
+        self.sessionDict[session_id].__dict__.update(data)
+
+    def runSession(self, session_id: str):
+        if session_id not in self.sessionDict:
+            raise KeyError(f'{session_id} not in session dict')
+        execUnit = ExecuteUnit(self.sessionDict[session_id])
+        self.sessionDict[session_id].session_task = execUnit
 
 
 def generateRsa():
