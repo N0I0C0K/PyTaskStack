@@ -15,7 +15,6 @@
     
 - 预想的功能
     - 打卡失败
-        
         ```python
         Nick, cheer打卡失败.
         访问 http://192.168.0.1/session/sahdisad21bnjh1761vjv17t  重新任务

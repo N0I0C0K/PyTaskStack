@@ -94,7 +94,7 @@ class SessionCore:
         assert session.session_task is not None
         task: ExecuteUnit = session.session_task
         if not task.finished():
-            return ('', '')
+            return ('', 'ERROR:task is running')
         return (task.stdout, task.stderr)
 
 

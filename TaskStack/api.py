@@ -35,6 +35,17 @@ class Session:
     session_command: str = None
 
 
+def configServer(pub_key: str, host: str = '127.0.0.1', port: int = 5555):
+    '''
+    初始化设置
+    :param host: 服务提供的主机
+    :param port: 主机的端口
+    :public_key: 公钥
+    '''
+    global server_host, server_port, public_key
+    server_host, server_port, public_key = host, port, pub_key
+
+
 def formUrl(s: str = '') -> str:
     '''
     获得转换后的url, 比如`s = /test`就会返回`http://host:port/test`
