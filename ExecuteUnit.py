@@ -12,20 +12,33 @@ class ExecuteUnit:
         '''
         self.session_info = session_info
         self.command = shlex.split(session_info.session_command)
-        self.task = subprocess.Popen(
-            self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        self.task = None
+        try:
+            self.task = subprocess.Popen(
+                self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        except OSError as oserr:
+            logging.error(oserr)
+        except ValueError as valerr:
+            logging.error(valerr)
+        logging.debug('[*] Start execute %s => %s',
+                      self.session_info.session_id, self.command)
         pass
 
     def finished(self) -> bool:
-        return self.task.poll() is not None
+        return self.task and self.task.poll() is not None
 
     def kill(self):
-        self.task.kill()
+        if self.task:
+            self.task.kill()
 
     @property
     def stdout(self) -> str:
-        return self.task.stdout.read().decode()
+        if not self.task:
+            return ''
+        return autoDecode(self.task.stdout.read())
 
     @property
     def stderr(self) -> str:
-        return self.task.stderr.read().decode()
+        if not self.task:
+            return ''
+        return autoDecode(self.task.stderr.read())

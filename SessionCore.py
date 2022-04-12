@@ -64,10 +64,11 @@ class SessionCore:
         else:
             return session_info.token == token
 
-    def updateSessionInfoByDict(self, session_id: str, data: dict):
-        if session_id not in self.sessionDict:
-            raise KeyError(f'{session_id} not in sessionDict')
-        self.sessionDict[session_id].__dict__.update(data)
+    def updateSessionFromForm(self, session_id: str, data: SessionForm):
+        assert session_id in self.sessionDict
+        session = self.sessionDict[session_id]
+        session.__dict__.update(data.dict())
+        logging.info('%s', str(session))
 
     def runSession(self, session_id: str):
         assert session_id in self.sessionDict

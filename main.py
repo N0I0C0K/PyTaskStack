@@ -1,22 +1,10 @@
 from fastapi import FastAPI, Request
-from pydantic import BaseModel
 from SessionCore import sessionManager
 from typing import *
 import uvicorn
-import logging
+from utils import *
 
 app = FastAPI()
-logging.basicConfig(filename='./log/test.log',
-                    level=logging.DEBUG, encoding='utf-8')
-
-
-class SeeionForm(BaseModel):
-    token: str                        # 密钥
-    session_id: str                   # session id
-    session_name: str                 # 任务名称
-    session_command: str              # 任务需要执行的命令
-    stdout_log: Optional[str] = None  # 标准输出输出到哪个文件
-    stderr_log: Optional[str] = None  # 标准错误输出到哪个文件
 
 
 @app.get('/')
@@ -32,19 +20,25 @@ async def get_session(req: Request):
 
 
 @app.post('/pushsession')
-async def push_session(form: SeeionForm, req: Request):
-    logging.debug(req.client)
+async def push_session(form: SessionForm, req: Request):
+    logging.debug('%s ==========> %s', req.client, req.base_url.is_secure)
     if not sessionManager.verify(form.session_id, form.token):
         return {'code': 500, 'msg': '非法授权'}
-    sessionManager.updateSessionInfoByDict(form.session_id, form.dict())
-    return {'code': 200}
+    sessionManager.updateSessionFromForm(form.session_id, form)
+    return {'code': 200, 'url': f'{req.base_url}session/{form.session_id}'}
 
 
 @app.get('/session/{session_id}')
 async def view_session(session_id: str, req: Request):
     logging.debug('%s ==========> %s', session_id, req.client)
+    stdout, stderr = sessionManager.getSessionOutPut(session_id)
+    return {'code': 200, 'stdout': stdout, 'stderr': stderr}
 
-    pass
+
+@app.get('/run/{session_id}')
+async def run_session(session_id: str, req: Request):
+    sessionManager.runSession(session_id)
+    return {'code': 200}
 
 
 @app.get('/test')
