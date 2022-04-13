@@ -4,7 +4,12 @@ from typing import *
 import uvicorn
 from utils import *
 
-app = FastAPI()
+DEBUG = True
+
+if DEBUG:
+    app = FastAPI()
+else:
+    app = FastAPI(docs_url=None, redoc_url=None)
 
 
 @app.get('/')
@@ -14,6 +19,9 @@ async def index():
 
 @app.get('/getsession')
 async def get_session(req: Request):
+    '''
+    申请`session`的验证阶段
+    '''
     logging.debug(req.client)
     session_id, key = sessionManager.newSession()
     return {'code': 200, 'session_id': session_id, 'key': key}
@@ -21,6 +29,9 @@ async def get_session(req: Request):
 
 @app.post('/pushsession')
 async def push_session(form: SessionForm, req: Request):
+    '''
+    正式上传`session`的信息
+    '''
     logging.debug('%s ==========> %s', req.client, req.base_url.is_secure)
     if not sessionManager.verify(form.session_id, form.token):
         return {'code': 500, 'msg': '非法授权'}
@@ -30,6 +41,9 @@ async def push_session(form: SessionForm, req: Request):
 
 @app.get('/session/{session_id}')
 async def view_session(session_id: str, req: Request):
+    '''
+    获得`session_id`的执行信息
+    '''
     logging.debug('%s ==========> %s', session_id, req.client)
     stdout, stderr = sessionManager.getSessionOutPut(session_id)
     return {'code': 200, 'stdout': stdout, 'stderr': stderr}
@@ -37,6 +51,9 @@ async def view_session(session_id: str, req: Request):
 
 @app.get('/run/{session_id}')
 async def run_session(session_id: str, req: Request):
+    '''
+    执行`session_id`
+    '''
     sessionManager.runSession(session_id)
     return {'code': 200}
 
