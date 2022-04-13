@@ -1,13 +1,14 @@
 import rsa
 import rsa.randnum
-import Crypto.Cipher
+import Crypto.Cipher.AES as CryptoAes
 import base64
 import requests
 import json
 from typing import *
 
-__all__ = ['server_port', 'server_host',
-           'public_key', 'checkServer', 'applySession', 'runSession']
+__all__ = ['checkServer',
+           'applySession', 'runSession',
+           'getEncodedData', 'configServer']
 
 server_port = 5555
 '''
@@ -27,6 +28,8 @@ Prc8gi5NhmTXBq90fD5LyazlSg8lfJtxYt/35drYd/7r4TfBasSrAgMBAAE=
 公钥, 需要手动更改
 '''
 
+__PublicKey: rsa.PublicKey = None
+
 
 class Session:
     token: str = None
@@ -44,8 +47,9 @@ def configServer(pub_key: str, host: str = '127.0.0.1', port: int = 5555):
     :param port: 主机的端口
     :public_key: 公钥
     '''
-    global server_host, server_port, public_key
+    global server_host, server_port, public_key, __PublicKey
     server_host, server_port, public_key = host, port, pub_key
+    __PublicKey = rsa.PublicKey.load_pkcs1(pub_key.encode('utf-8'))
 
 
 def formUrl(s: str = '') -> str:
@@ -70,6 +74,23 @@ def checkServer() -> bool:
         return res['code'] == 200
 
 
+def getEncodedData(session_id: str, session_name: str, session_command: str) -> Dict:
+    assert __PublicKey is not None
+    session_form = {
+        'session_id': session_id,
+        'session_name': session_name,
+        'session_command': session_command
+    }
+    session_str = json.dumps(session_form)
+    aes_key = rsa.randnum.read_random_bits(128)
+    aes = CryptoAes.new(aes_key, CryptoAes.MODE_EAX)
+    encodForm, tag = aes.encrypt_and_digest(session_str.encode())
+    encodForm, tag = base64.b64encode(
+        encodForm).decode(), base64.b64encode(tag).decode()
+    encodAesKey = base64.b64encode(rsa.encrypt(aes_key, __PublicKey)).decode()
+    return {'data': encodForm, 'sign': tag, 'key': encodAesKey}
+
+
 def applySession(session_name: str, session_command: str) -> Tuple[str, Session]:
     '''
     申请一个`Session`
@@ -77,14 +98,14 @@ def applySession(session_name: str, session_command: str) -> Tuple[str, Session]
     :param session_command: 需要执行的命令
     :return: Tuple[url, Session] 
     '''
+    assert __PublicKey is not None
     if not checkServer():
         return None
     session = requests.get(formUrl('/getsession')).json()
     if session['code'] != 200:
         return None
-    pub = rsa.PublicKey.load_pkcs1(public_key.encode())
     token = base64.b64encode(rsa.encrypt(
-        session['key'].encode(), pub)).decode()
+        session['key'].encode(), __PublicKey)).decode()
     form = {
         'token': token,
         'session_id': session['session_id'],

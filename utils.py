@@ -1,6 +1,6 @@
+import logging
 from typing import *
 from pydantic import BaseModel
-import logging
 from chardet import detect
 
 logging.basicConfig(filename='./log/test.log',
@@ -28,12 +28,18 @@ class SessionInfo:
 
 
 class SessionForm(BaseModel):
-    token: str                        # 密钥
+    # key: str                        # 密钥
     session_id: str                   # session id
     session_name: str                 # 任务名称
     session_command: str              # 任务需要执行的命令
     stdout_log: Optional[str] = None  # 标准输出输出到哪个文件
     stderr_log: Optional[str] = None  # 标准错误输出到哪个文件
+
+
+class FormRaw(BaseModel):
+    data: str
+    sign: str
+    key: str
 
 
 def autoDecode(s: bytes) -> str:

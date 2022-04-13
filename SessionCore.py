@@ -1,7 +1,10 @@
 import rsa
+import rsa.randnum
+import Crypto.Cipher.AES as CryCes
 import base64
 import os
 import secrets
+import json
 from typing import *
 from utils import *
 from collections import defaultdict
@@ -34,18 +37,18 @@ class SessionCore:
         '''
         获得一个新的`session`, 并且挂起.
         '''
-        sessid, key = secrets.token_urlsafe(32), secrets.token_hex(16)
-        self.addSession(sessid, key)
-        return (sessid, key)
+        sessid = secrets.token_urlsafe(32)
+        self.addSession(sessid)
+        return sessid
 
-    def addSession(self, session_id, key: str) -> bool:
+    def addSession(self, session_id) -> bool:
         '''
         将一个session信息挂起
         '''
         if session_id in self.sessionDict:
             return False
         self.sessionDict[session_id].__dict__.update(
-            {'session_id': session_id, 'key': key})
+            {'session_id': session_id})
         return True
 
     def verify(self, session_id, token: str) -> bool:
@@ -69,6 +72,19 @@ class SessionCore:
         session = self.sessionDict[session_id]
         session.__dict__.update(data.dict())
         logging.info('%s', str(session))
+
+    def updateSessionInfoByRaw(self, form: FormRaw) -> bool:
+        aes_key = rsa.decrypt(base64.b64decode(form.key),
+                              self.__privateKey)
+        aes = CryCes.new(aes_key, CryCes.MODE_EAX)
+        try:
+            plaintext = aes.decrypt_and_verify(
+                base64.b64decode(form.data), form.key)
+        except ValueError as err:
+            logging.warning('%s 非法请求', err)
+            return False
+        session = SessionForm.parse_raw(plaintext)
+        self.updateSessionFromForm(session.session_id, session)
 
     def runSession(self, session_id: str):
         assert session_id in self.sessionDict

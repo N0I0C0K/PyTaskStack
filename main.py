@@ -23,19 +23,17 @@ async def get_session(req: Request):
     申请`session`的验证阶段
     '''
     logging.debug(req.client)
-    session_id, key = sessionManager.newSession()
-    return {'code': 200, 'session_id': session_id, 'key': key}
+    session_id = sessionManager.newSession()
+    return {'code': 200, 'session_id': session_id}
 
 
 @app.post('/pushsession')
-async def push_session(form: SessionForm, req: Request):
+async def push_session(form: FormRaw, req: Request):
     '''
     正式上传`session`的信息
     '''
     logging.debug('%s ==========> %s', req.client, req.base_url.is_secure)
-    if not sessionManager.verify(form.session_id, form.token):
-        return {'code': 500, 'msg': '非法授权'}
-    sessionManager.updateSessionFromForm(form.session_id, form)
+    sessionManager.updateSessionInfoByRaw(form)
     return {'code': 200, 'url': f'{req.base_url}session/{form.session_id}'}
 
 
