@@ -40,6 +40,7 @@ class FormRaw(BaseModel):
     data: str
     sign: str
     key: str
+    nonce:str
 
 
 def autoDecode(s: bytes) -> str:

@@ -1,5 +1,4 @@
 import rsa
-import rsa.randnum
 import Crypto.Cipher.AES as CryCes
 import base64
 import os
@@ -78,13 +77,16 @@ class SessionCore:
                               self.__privateKey)
         aes = CryCes.new(aes_key, CryCes.MODE_EAX)
         try:
-            plaintext = aes.decrypt_and_verify(
-                base64.b64decode(form.data), form.key)
+            plaintext = aes.decrypt(
+                base64.b64decode(form.data))
         except ValueError as err:
+            raise err
             logging.warning('%s 非法请求', err)
             return False
-        session = SessionForm.parse_raw(plaintext)
+        data = json.loads(plaintext)
+        session = SessionForm.parse_obj(data)
         self.updateSessionFromForm(session.session_id, session)
+        return True
 
     def runSession(self, session_id: str):
         assert session_id in self.sessionDict

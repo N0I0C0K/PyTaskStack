@@ -87,8 +87,10 @@ def getEncodedData(session_id: str, session_name: str, session_command: str) -> 
     encodForm, tag = aes.encrypt_and_digest(session_str.encode())
     encodForm, tag = base64.b64encode(
         encodForm).decode(), base64.b64encode(tag).decode()
-    encodAesKey = base64.b64encode(rsa.encrypt(aes_key, __PublicKey)).decode()
-    return {'data': encodForm, 'sign': tag, 'key': encodAesKey}
+    print(aes.decrypt(base64.b64decode(encodForm)).decode())
+    encodAesKey = base64.b64encode(rsa.encrypt(
+        aes_key, __PublicKey)).decode()
+    return {'data': encodForm, 'sign': tag, 'key': encodAesKey,'nonce':base64.b64encode(aes.nonce).decode()}
 
 
 def applySession(session_name: str, session_command: str) -> Tuple[str, Session]:

@@ -1,5 +1,6 @@
-import random
+from CryptoCore import cryptoCore
 from TaskStack import *
+from utils import *
 
 public_key = '''-----BEGIN RSA PUBLIC KEY-----
 MIGJAoGBAIRNNXAVS3b84Cn3SbTpcUCTri6QMukknwzA1PVheAC6ax2cVz2SM/wP
@@ -11,4 +12,7 @@ Prc8gi5NhmTXBq90fD5LyazlSg8lfJtxYt/35drYd/7r4TfBasSrAgMBAAE=
 # print(url)
 # runSession(sess)
 configServer(public_key)
-print(getEncodedData('123', '123', 'ssssss'))
+data = getEncodedData('123', '123', 'ssssss')
+print(data)
+form = FormRaw.parse_obj(data)
+print(cryptoCore.FormRawToSessionForm(form))
