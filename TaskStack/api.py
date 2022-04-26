@@ -8,7 +8,7 @@ from typing import *
 
 __all__ = ['checkServer',
            'applySession', 'runSession',
-           'getEncodedData', 'configServer']
+           'encodeSessionForm', 'configServer']
 
 server_port = 5555
 '''
@@ -74,23 +74,17 @@ def checkServer() -> bool:
         return res['code'] == 200
 
 
-def getEncodedData(session_id: str, session_name: str, session_command: str) -> Dict:
+def encodeSessionForm(session_form: Dict) -> Dict:
     assert __PublicKey is not None
-    session_form = {
-        'session_id': session_id,
-        'session_name': session_name,
-        'session_command': session_command
-    }
     session_str = json.dumps(session_form)
     aes_key = rsa.randnum.read_random_bits(128)
     aes = CryptoAes.new(aes_key, CryptoAes.MODE_EAX)
     encodForm, tag = aes.encrypt_and_digest(session_str.encode())
     encodForm, tag = base64.b64encode(
         encodForm).decode(), base64.b64encode(tag).decode()
-    print(aes.decrypt(base64.b64decode(encodForm)).decode())
     encodAesKey = base64.b64encode(rsa.encrypt(
         aes_key, __PublicKey)).decode()
-    return {'data': encodForm, 'sign': tag, 'key': encodAesKey,'nonce':base64.b64encode(aes.nonce).decode()}
+    return {'data': encodForm, 'sign': tag, 'key': encodAesKey, 'nonce': base64.b64encode(aes.nonce).decode()}
 
 
 def applySession(session_name: str, session_command: str) -> Tuple[str, Session]:
@@ -107,21 +101,32 @@ def applySession(session_name: str, session_command: str) -> Tuple[str, Session]
     if session['code'] != 200:
         return None
     token = base64.b64encode(rsa.encrypt(
-        session['key'].encode(), __PublicKey)).decode()
+        session['session_id'].encode(), __PublicKey)).decode()
     form = {
         'token': token,
         'session_id': session['session_id'],
         'session_name': session_name,
         'session_command': session_command
     }
-    res = requests.post(formUrl('/pushsession'), json=form).json()
+    data = encodeSessionForm(form)
+    res = requests.post(formUrl('/pushsession'),
+                        json=data).json()
     sess = Session()
     sess.__dict__.update(form)
     return (res['url'], sess)
 
 
+def getSessionRunInfo(session: Session) -> Tuple[str, str]:
+    if not checkServer():
+        return ('', '')
+    res = requests.get(formUrl(f'/session/info/{session.session_id}')).json()
+    if res['code'] != 200:
+        return ('', '')
+    return (res['stdout'], res['stderr'])
+
+
 def runSession(session: Session) -> bool:
     if not checkServer():
         return None
-    res = requests.get(formUrl(f'/run/{session.session_id}')).json()
+    res = requests.get(formUrl(f'/session/run/{session.session_id}')).json()
     return res['code'] == 200

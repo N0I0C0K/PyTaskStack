@@ -3,16 +3,15 @@ from TaskStack import *
 from utils import *
 
 public_key = '''-----BEGIN RSA PUBLIC KEY-----
-MIGJAoGBAIRNNXAVS3b84Cn3SbTpcUCTri6QMukknwzA1PVheAC6ax2cVz2SM/wP
-v0Od6a33U6JQzfzN6+k5ts5YmV+UW6jJJehFLKLZAfJd+O28m0ZdJrm/dBR/8zyH
-Prc8gi5NhmTXBq90fD5LyazlSg8lfJtxYt/35drYd/7r4TfBasSrAgMBAAE=
+MIGJAoGBAMYDmoov9/tesKXOjQSr+no7Vq0sguxEnArR+dkjrO3NXbqH3hrxGwly
+FnxshkuG+UcTviVHjOfNkppdDLKLviXzxOWyfvUx2JdBI3N6oWLfIg8CRSGVyzYa
+dTXM3apdikCWVyVMKkw2iFI0O5lueMsBxhB1irg08FvtfvzDV8Z9AgMBAAE=
 -----END RSA PUBLIC KEY-----
 '''
 # url, sess = applySession('test', 'python -c "print(1+2+3)"')
 # print(url)
 # runSession(sess)
 configServer(public_key)
-data = getEncodedData('123', '123', 'ssssss')
-print(data)
-form = FormRaw.parse_obj(data)
-print(cryptoCore.FormRawToSessionForm(form))
+url, session = applySession('test', 'ipconfig')
+print(url)
+runSession(session)

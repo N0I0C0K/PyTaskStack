@@ -1,0 +1,281 @@
+WARNING:root:MAC check failed 非法请求
+WARNING:root:MAC check failed 非法请求
+DEBUG:chardet.charsetprober:SHIFT_JIS Japanese prober hit error at byte 6
+DEBUG:chardet.charsetprober:EUC-JP Japanese prober hit error at byte 12
+DEBUG:chardet.charsetprober:GB2312 Chinese prober hit error at byte 26
+DEBUG:chardet.charsetprober:EUC-KR Korean prober hit error at byte 12
+DEBUG:chardet.charsetprober:CP949 Korean prober hit error at byte 12
+DEBUG:chardet.charsetprober:Big5 Chinese prober hit error at byte 24
+DEBUG:chardet.charsetprober:EUC-TW Taiwan prober hit error at byte 4
+DEBUG:chardet.charsetprober:windows-1251 Russian confidence = 0.0
+DEBUG:chardet.charsetprober:KOI8-R Russian confidence = 0.0609499780604459
+DEBUG:chardet.charsetprober:ISO-8859-5 Russian confidence = 0.13815328360367735
+DEBUG:chardet.charsetprober:MacCyrillic Russian confidence = 0.0
+DEBUG:chardet.charsetprober:IBM866 Russian confidence = 0.01
+DEBUG:chardet.charsetprober:IBM855 Russian confidence = 0.0
+DEBUG:chardet.charsetprober:ISO-8859-7 Greek confidence = 0.23939958106270312
+DEBUG:chardet.charsetprober:windows-1253 Greek confidence = 0.23939958106270312
+DEBUG:chardet.charsetprober:ISO-8859-5 Bulgarian confidence = 0.09824518382459854
+DEBUG:chardet.charsetprober:windows-1251 Bulgarian confidence = 0.06666637473812044
+DEBUG:chardet.charsetprober:TIS-620 Thai confidence = 0.0
+DEBUG:chardet.charsetprober:ISO-8859-9 Turkish confidence = 0.0
+DEBUG:chardet.charsetprober:windows-1255 Hebrew confidence = 0.0
+DEBUG:chardet.charsetprober:windows-1255 Hebrew confidence = 0.10503938309866116
+DEBUG:chardet.charsetprober:windows-1255 Hebrew confidence = 0.10503938309866116
+DEBUG:chardet.charsetprober:windows-1251 Russian confidence = 0.0
+DEBUG:chardet.charsetprober:KOI8-R Russian confidence = 0.0609499780604459
+DEBUG:chardet.charsetprober:ISO-8859-5 Russian confidence = 0.13815328360367735
+DEBUG:chardet.charsetprober:MacCyrillic Russian confidence = 0.0
+DEBUG:chardet.charsetprober:IBM866 Russian confidence = 0.01
+DEBUG:chardet.charsetprober:IBM855 Russian confidence = 0.0
+DEBUG:chardet.charsetprober:ISO-8859-7 Greek confidence = 0.23939958106270312
+DEBUG:chardet.charsetprober:windows-1253 Greek confidence = 0.23939958106270312
+DEBUG:chardet.charsetprober:ISO-8859-5 Bulgarian confidence = 0.09824518382459854
+DEBUG:chardet.charsetprober:windows-1251 Bulgarian confidence = 0.06666637473812044
+DEBUG:chardet.charsetprober:TIS-620 Thai confidence = 0.0
+DEBUG:chardet.charsetprober:ISO-8859-9 Turkish confidence = 0.0
+DEBUG:chardet.charsetprober:windows-1255 Hebrew confidence = 0.0
+DEBUG:chardet.charsetprober:windows-1255 Hebrew confidence = 0.10503938309866116
+DEBUG:chardet.charsetprober:windows-1255 Hebrew confidence = 0.10503938309866116
+DEBUG:asyncio:Using selector: SelectSelector
+INFO:uvicorn.error:Started server process [19916]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Uvicorn running on http://0.0.0.0:5555 (Press CTRL+C to quit)
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET / HTTP/1.1" 200 43
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=2090)
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET /getsession HTTP/1.1" 200 71
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET / HTTP/1.1" 200 43
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=2227)
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET /getsession HTTP/1.1" 200 71
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "POST /pushsession HTTP/1.1" 422 316
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET / HTTP/1.1" 200 43
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=2252)
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET /getsession HTTP/1.1" 200 71
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "POST /pushsession HTTP/1.1" 422 316
+DEBUG:asyncio:Using selector: SelectSelector
+INFO:uvicorn.error:Started server process [10776]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Uvicorn running on http://0.0.0.0:5555 (Press CTRL+C to quit)
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET / HTTP/1.1" 200 43
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=2286)
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET /getsession HTTP/1.1" 200 71
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "POST /pushsession HTTP/1.1" 422 316
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [10776]
+DEBUG:asyncio:Using selector: SelectSelector
+INFO:uvicorn.error:Started server process [8296]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Uvicorn running on http://0.0.0.0:5555 (Press CTRL+C to quit)
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET / HTTP/1.1" 200 43
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=3782)
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET /getsession HTTP/1.1" 200 71
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=3783) ==========> False
+INFO:root:4UzrDfJ_4fD7xD9nHBWWMpiR18YmYWtqrOrxH1o90AM:test => ipconfig
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "POST /pushsession HTTP/1.1" 500 21
+ERROR:uvicorn.error:Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 375, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 75, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\applications.py", line 261, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\middleware\errors.py", line 181, in __call__
+    raise exc
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\middleware\errors.py", line 159, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\exceptions.py", line 82, in __call__
+    raise exc
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\exceptions.py", line 71, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    raise e
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 656, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 259, in handle
+    await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 61, in app
+    response = await func(request)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\routing.py", line 227, in app
+    raw_response = await run_endpoint_function(
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\routing.py", line 160, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\program_working\PyTaskStack\main.py", line 39, in push_session
+    return {'code': 200, 'url': f'{req.base_url}session/{form.session_id}'}
+AttributeError: 'FormRaw' object has no attribute 'session_id'
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET / HTTP/1.1" 200 43
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=3806)
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET /getsession HTTP/1.1" 200 71
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=3814) ==========> False
+INFO:root:vg8p-9QlsL-5sZIzWaajcCkTJeP272siUILFN8WvXW4:test => ipconfig
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "POST /pushsession HTTP/1.1" 500 21
+ERROR:uvicorn.error:Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 375, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 75, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\applications.py", line 261, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\middleware\errors.py", line 181, in __call__
+    raise exc
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\middleware\errors.py", line 159, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\exceptions.py", line 82, in __call__
+    raise exc
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\exceptions.py", line 71, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    raise e
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 656, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 259, in handle
+    await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 61, in app
+    response = await func(request)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\routing.py", line 227, in app
+    raw_response = await run_endpoint_function(
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\routing.py", line 160, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\program_working\PyTaskStack\main.py", line 39, in push_session
+    return {'code': 200, 'url': f'{req.base_url}session/{form.session_id}'}
+AttributeError: 'FormRaw' object has no attribute 'session_id'
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET / HTTP/1.1" 200 43
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=3858)
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET /getsession HTTP/1.1" 200 71
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=3859) ==========> False
+INFO:root:3i_WIxGxbcKzVRDYhbMHEEGO8jBTpHc6rNABgOUHYQ8:test => ipconfig
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "POST /pushsession HTTP/1.1" 500 21
+ERROR:uvicorn.error:Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 375, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 75, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\applications.py", line 261, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\middleware\errors.py", line 181, in __call__
+    raise exc
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\middleware\errors.py", line 159, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\exceptions.py", line 82, in __call__
+    raise exc
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\exceptions.py", line 71, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    raise e
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 656, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 259, in handle
+    await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 61, in app
+    response = await func(request)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\routing.py", line 227, in app
+    raw_response = await run_endpoint_function(
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\routing.py", line 160, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\program_working\PyTaskStack\main.py", line 39, in push_session
+    return {'code': 200, 'url': f'{req.base_url}session/{form.session_id}'}
+AttributeError: 'FormRaw' object has no attribute 'session_id'
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [8296]
+DEBUG:asyncio:Using selector: SelectSelector
+INFO:uvicorn.error:Started server process [38104]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Uvicorn running on http://0.0.0.0:5555 (Press CTRL+C to quit)
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET / HTTP/1.1" 200 43
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=3986)
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET /getsession HTTP/1.1" 200 71
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:Address(host='127.0.0.1', port=3987) ==========> False
+INFO:root:gdOGYw4Znuqzk7OqT4lW02YW3o1EHyk1NH629WCEFHg:test => ipconfig
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "POST /pushsession HTTP/1.1" 200 94
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET / HTTP/1.1" 200 43
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 127.0.0.1:5555
+DEBUG:root:[*] Start execute gdOGYw4Znuqzk7OqT4lW02YW3o1EHyk1NH629WCEFHg => ['ipconfig']
+DEBUG:urllib3.connectionpool:http://127.0.0.1:5555 "GET /session/run/gdOGYw4Znuqzk7OqT4lW02YW3o1EHyk1NH629WCEFHg HTTP/1.1" 200 12
+DEBUG:root:gdOGYw4Znuqzk7OqT4lW02YW3o1EHyk1NH629WCEFHg ==========> Address(host='127.0.0.1', port=4024)
+DEBUG:chardet.charsetprober:SHIFT_JIS Japanese prober hit error at byte 35
+DEBUG:chardet.charsetprober:EUC-TW Taiwan prober hit error at byte 51
+DEBUG:chardet.charsetprober:utf-8 not active
+DEBUG:chardet.charsetprober:SHIFT_JIS not active
+DEBUG:chardet.charsetprober:EUC-JP Japanese confidence = 0.04508856682769726
+DEBUG:chardet.charsetprober:GB2312 Chinese confidence = 0.99
+DEBUG:chardet.charsetprober:EUC-KR Korean confidence = 0.01984126984126984
+DEBUG:chardet.charsetprober:CP949 Korean confidence = 0.01984126984126984
+DEBUG:chardet.charsetprober:Big5 Chinese confidence = 0.08446455505279035
+DEBUG:chardet.charsetprober:EUC-TW not active
+DEBUG:chardet.charsetprober:windows-1251 Russian confidence = 0.0
+DEBUG:chardet.charsetprober:KOI8-R Russian confidence = 0.2401266508029899
+DEBUG:chardet.charsetprober:ISO-8859-5 Russian confidence = 0.08662637207594982
+DEBUG:chardet.charsetprober:MacCyrillic Russian confidence = 0.01
+DEBUG:chardet.charsetprober:IBM866 Russian confidence = 0.01
+DEBUG:chardet.charsetprober:IBM855 Russian confidence = 0.12445638073259609
+DEBUG:chardet.charsetprober:ISO-8859-7 Greek confidence = 0.03935424283221011
+DEBUG:chardet.charsetprober:windows-1253 Greek confidence = 0.043845834874191206
+DEBUG:chardet.charsetprober:ISO-8859-5 Bulgarian confidence = 0.08012169934803465
+DEBUG:chardet.charsetprober:windows-1251 Bulgarian confidence = 0.027069683628267047
+DEBUG:chardet.charsetprober:TIS-620 Thai confidence = 0.11475596997525123
+DEBUG:chardet.charsetprober:ISO-8859-9 Turkish confidence = 0.11021986676610782
+DEBUG:chardet.charsetprober:ISO-8859-8 Hebrew confidence = 0.0
+DEBUG:chardet.charsetprober:ISO-8859-8 Hebrew confidence = 0.0
+DEBUG:chardet.charsetprober:ISO-8859-8 Hebrew confidence = 0.04966989965407633
+DEBUG:chardet.charsetprober:utf-8 not active
+DEBUG:chardet.charsetprober:SHIFT_JIS not active
+DEBUG:chardet.charsetprober:EUC-JP Japanese confidence = 0.04508856682769726
+DEBUG:chardet.charsetprober:GB2312 Chinese confidence = 0.99
+DEBUG:chardet.charsetprober:EUC-KR Korean confidence = 0.01984126984126984
+DEBUG:chardet.charsetprober:CP949 Korean confidence = 0.01984126984126984
+DEBUG:chardet.charsetprober:Big5 Chinese confidence = 0.08446455505279035
+DEBUG:chardet.charsetprober:EUC-TW not active
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [38104]
+DEBUG:rsa.key:find_p_q(512): Finding p
+DEBUG:rsa.key:find_p_q(512): Finding q
+DEBUG:rsa.key:find_p_q(512): Finding p
+DEBUG:rsa.key:find_p_q(512): Finding q

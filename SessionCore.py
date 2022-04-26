@@ -4,6 +4,7 @@ import base64
 import os
 import secrets
 import json
+from CryptoCore import cryptoCore
 from typing import *
 from utils import *
 from collections import defaultdict
@@ -11,26 +12,18 @@ from ExecuteUnit import ExecuteUnit
 
 
 class SessionCore:
-    sessionDict: Dict[str, SessionInfo] = None
-    '''
-    里面储存着所有session的授权信息
-    `session_id`=>`{'session_id':'id','key':'key','token':'token'}`
-    '''
 
-    def __init__(self, private_key: str = None) -> None:
+    def __init__(self):
         '''
         会话核心组件, 包括`session`的存储, 验证, 获取
         :param private_key: private key, 默认为`None`会读取AuthCore文件的目录下的`private_key`文件
         '''
-        self.sessionDict = defaultdict(SessionInfo)  # 储存session信息
-        if private_key is None:
-            key_path = os.path.dirname(__file__)+'\\private_key'
-            if not os.path.exists(key_path):
-                raise ValueError(f'{key_path} 不存在, 未能初始化验证组件')
-            with open(key_path, 'r', encoding='utf-8') as file:
-                private_key = file.read()
-        self.__privateKey = rsa.PrivateKey.load_pkcs1(
-            private_key.encode('utf-8'))
+        self.sessionDict: Dict[str, SessionInfo] = defaultdict(
+            SessionInfo)  # 储存session信息
+        '''
+        里面储存着所有session的授权信息
+        `session_id`=>`{'session_id':'id','key':'key','token':'token'}`
+        '''
 
     def newSession(self) -> Tuple[str, str]:
         '''
@@ -50,43 +43,16 @@ class SessionCore:
             {'session_id': session_id})
         return True
 
-    def verify(self, session_id, token: str) -> bool:
-        '''
-        验证`token`的正确性
-        '''
-        if session_id not in self.sessionDict:
-            return False
-        _token = base64.b64decode(token)
-        session_info: SessionInfo = self.sessionDict[session_id]
-        if session_info.token is None:
-            if rsa.decrypt(_token, self.__privateKey).decode() == session_info.key:
-                return True
-            else:
-                return False
-        else:
-            return session_info.token == token
-
-    def updateSessionFromForm(self, session_id: str, data: SessionForm):
+    def updateSessionFromSessionForm(self, session_id: str, data: SessionForm):
         assert session_id in self.sessionDict
         session = self.sessionDict[session_id]
         session.__dict__.update(data.dict())
         logging.info('%s', str(session))
 
-    def updateSessionInfoByRaw(self, form: FormRaw) -> bool:
-        aes_key = rsa.decrypt(base64.b64decode(form.key),
-                              self.__privateKey)
-        aes = CryCes.new(aes_key, CryCes.MODE_EAX)
-        try:
-            plaintext = aes.decrypt(
-                base64.b64decode(form.data))
-        except ValueError as err:
-            raise err
-            logging.warning('%s 非法请求', err)
-            return False
-        data = json.loads(plaintext)
-        session = SessionForm.parse_obj(data)
-        self.updateSessionFromForm(session.session_id, session)
-        return True
+    def updateSessionInfoByRaw(self, form: FormRaw) -> str:
+        decodeForm = cryptoCore.DecodeFormRaw(form)
+        self.updateSessionFromSessionForm(decodeForm.session_id, decodeForm)
+        return decodeForm.session_id
 
     def runSession(self, session_id: str):
         assert session_id in self.sessionDict
@@ -116,19 +82,11 @@ class SessionCore:
         return (task.stdout, task.stderr)
 
 
-def generateRsa():
-    pub, pri = rsa.newkeys(1024)
-    with open('./private_key', 'wb') as file:
-        file.write(pri.save_pkcs1())
-    with open('./public_key', 'wb') as file:
-        file.write(pub.save_pkcs1())
-
-
 if __name__ == '__main__':
     # generateRsa()
     pass
 
 sessionManager = SessionCore()
 '''
-认证组件单例,会话核心组件, 包括`session`的存储, 验证, 获取
+认证组件单例,会话核心组件, 包括`session`的存储, 获取
 '''

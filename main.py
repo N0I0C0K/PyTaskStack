@@ -21,6 +21,7 @@ async def index():
 async def get_session(req: Request):
     '''
     申请`session`的验证阶段
+    :return :  ` {'code': 状态码, 'session_id': id}`
     '''
     logging.debug(req.client)
     session_id = sessionManager.newSession()
@@ -31,13 +32,14 @@ async def get_session(req: Request):
 async def push_session(form: FormRaw, req: Request):
     '''
     正式上传`session`的信息
+    :return :`{'code':状态码, 'url':session的信息页面url}`
     '''
     logging.debug('%s ==========> %s', req.client, req.base_url.is_secure)
-    sessionManager.updateSessionInfoByRaw(form)
-    return {'code': 200, 'url': f'{req.base_url}session/{form.session_id}'}
+    sessid = sessionManager.updateSessionInfoByRaw(form)
+    return {'code': 200, 'url': f'{req.base_url}session/{sessid}'}
 
 
-@app.get('/session/{session_id}')
+@app.get('/session/info/{session_id}')
 async def view_session(session_id: str, req: Request):
     '''
     获得`session_id`的执行信息
@@ -47,7 +49,7 @@ async def view_session(session_id: str, req: Request):
     return {'code': 200, 'stdout': stdout, 'stderr': stderr}
 
 
-@app.get('/run/{session_id}')
+@app.get('/session/run/{session_id}')
 async def run_session(session_id: str, req: Request):
     '''
     执行`session_id`
