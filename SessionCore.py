@@ -68,6 +68,11 @@ class SessionCore:
         assert session.session_task is not None
         return session.session_task.finished()
 
+    def getSessionInfo(self, session_id: str) -> Union[SessionInfo, None]:
+        if session_id not in self.sessionDict:
+            return None
+        return self.sessionDict[session_id]
+
     def getSessionOutPut(self, session_id: str) -> Tuple[str, str]:
         '''
         获得`session_id`的输出, 如果还在 '运行' 则返回`('','')`, 如果不存在则抛出错误

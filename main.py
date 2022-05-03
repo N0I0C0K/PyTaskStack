@@ -1,7 +1,9 @@
 from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+import uvicorn
 from SessionCore import sessionManager
 from typing import *
-import uvicorn
 from utils import *
 
 DEBUG = True
@@ -10,6 +12,10 @@ if DEBUG:
     app = FastAPI()
 else:
     app = FastAPI(docs_url=None, redoc_url=None)
+
+app.mount('/Web', StaticFiles(directory='Web'), name="static")
+
+templates = Jinja2Templates(directory='Web')
 
 
 @app.get('/')
@@ -40,7 +46,7 @@ async def push_session(form: FormRaw, req: Request):
 
 
 @app.get('/session/info/{session_id}')
-async def view_session(session_id: str, req: Request):
+async def info_session(session_id: str, req: Request):
     '''
     获得`session_id`的执行信息
     '''
@@ -56,6 +62,14 @@ async def run_session(session_id: str, req: Request):
     '''
     sessionManager.runSession(session_id)
     return {'code': 200}
+
+
+@app.get('/session/{session_id}')
+async def view_session(session_id: str, req: Request):
+    session = sessionManager.getSessionInfo(session_id)
+    if session is None:
+        return {'code': 404}
+    return templates.TemplateResponse('session.html', {'request': req, 'name': session.session_name, 'stdout': session.stdout_log, 'stderr': session.stderr_log})
 
 
 @app.get('/test')

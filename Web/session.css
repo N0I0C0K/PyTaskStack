@@ -1,33 +1,117 @@
 *{
     box-sizing: border-box;
-    margin: 10px;
     border-radius: 20px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
-.main{
-    background-color: #E8F9FD;
-    position: absolute;
-    margin: 0px;
+
+:root{
+    --back_ground_color: #E8F9FD;
+    --color_1: #79DAE8;
+    --color_2: #0AA1DD;
+    --color_3: #2155CD;
+    ---btn_start_color: #C4DDFF;
+}
+
+.background{
+    position: fixed;
+    top:0px;
+    left: 0%;
+    background-color: var(--back_ground_color);
     border-radius: 0px;
-    top: 0px;
-    left: 0px;
-    width: 100%;
     height: 100vh;
+    width: 100vw;
+    margin: 0%;
+    z-index: -1;
 }
+
+.main{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main div{
+    margin: 2vw;
+}
+
 .head{
-    background-color: #79DAE8;
+    background-color: var(--color_1);
     margin-bottom: 7vh;
     height: 10vh;
-    line-height: 10vh;
     padding-left: 3vw;
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10vw;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.head h1{
+    vertical-align: middle;
+    display: contents;
+    font-size: 50px;
+}
+
+.head .btn{
+    height: 6vh;
+    width: 20vw;
+    border-radius: 15px;
+    border: solid;
+    font-size: 20px;
+}
+
+.head #start{
+    background-color: #FFEF82;
+}
+
+.head #start:hover{
+    transition: 300ms;
+    background-color: #EFD345;
+}
+
+
+.head #start:active{
+    transition: 40ms;
+    background-color: #BABD42;
+}
+
+.head #stop{
+    background-color: #B22727;
+}
+
+.head #stop:hover{
+    transition: 300ms;
+    background-color: #EE5007;
+}
+
+.head #stop:active{
+    transition: 40ms;
+    background-color: #ab3804;
+}
+
+.mid{
+    margin-left: 0%;
 }
 
 .mid *{
-    margin-bottom: 2vh;
+    margin-bottom: 20px;
 }
 
 .mid p{
     font-size: 30px;
-    height: 20vh;
+    padding-left: 2vw;
+}
+
+.mid .std{
+    display: block;
+    font-size: 23px;
+    min-height: 20vh;
+    height: auto;
     padding-left: 3vw;
-    background-color: #0AA1DD;
+    padding-right: 3vw;
+    min-width: 100%;
+
+    background-color: var(--color_2);
 }

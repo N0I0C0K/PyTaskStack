@@ -279,3 +279,60 @@ DEBUG:rsa.key:find_p_q(512): Finding p
 DEBUG:rsa.key:find_p_q(512): Finding q
 DEBUG:rsa.key:find_p_q(512): Finding p
 DEBUG:rsa.key:find_p_q(512): Finding q
+DEBUG:asyncio:Using selector: SelectSelector
+INFO:uvicorn.error:Started server process [14304]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Uvicorn running on http://0.0.0.0:5555 (Press CTRL+C to quit)
+ERROR:uvicorn.error:Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 375, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 75, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\applications.py", line 261, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\middleware\errors.py", line 181, in __call__
+    raise exc
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\middleware\errors.py", line 159, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\exceptions.py", line 82, in __call__
+    raise exc
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\exceptions.py", line 71, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 21, in __call__
+    raise e
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 656, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 259, in handle
+    await self.app(scope, receive, send)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\routing.py", line 61, in app
+    response = await func(request)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\routing.py", line 227, in app
+    raw_response = await run_endpoint_function(
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\fastapi\routing.py", line 160, in run_endpoint_function
+    return await dependant.call(**values)
+  File "d:\program_working\PyTaskStack\main.py", line 69, in view_session
+    return templates.TemplateResponse('session.html', {'request': req, 'stdout': session_id, 'stderr': 'test'})
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\templating.py", line 89, in TemplateResponse
+    template = self.get_template(name)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\starlette\templating.py", line 76, in get_template
+    return self.env.get_template(name)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\jinja2\environment.py", line 1000, in get_template
+    return self._load_template(name, globals)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\jinja2\environment.py", line 959, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "D:\DevelopEnvironment\Miniconda\envs\py39\lib\site-packages\jinja2\loaders.py", line 218, in get_source
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: session.html
+DEBUG:asyncio:Using selector: SelectSelector
+INFO:uvicorn.error:Started server process [39016]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Uvicorn running on http://0.0.0.0:5555 (Press CTRL+C to quit)
