@@ -47,7 +47,7 @@ class SessionCore:
         assert session_id in self.sessionDict
         session = self.sessionDict[session_id]
         session.__dict__.update(data.dict())
-        logging.info('%s', str(session))
+        logger.info('%s', str(session))
 
     def updateSessionInfoByRaw(self, form: FormRaw) -> str:
         decodeForm = cryptoCore.DecodeFormRaw(form)
@@ -78,9 +78,10 @@ class SessionCore:
         获得`session_id`的输出, 如果还在 '运行' 则返回`('','')`, 如果不存在则抛出错误
         :return :Tuple[stdout, stderr]
         '''
-        assert session_id in self.sessionDict
+        assert session_id in self.sessionDict, '非法session'
         session = self.sessionDict[session_id]
-        assert session.session_task is not None
+        if session.session_task is None:
+            return '', ''
         task: ExecuteUnit = session.session_task
         if not task.finished():
             return ('', 'ERROR:task is running')

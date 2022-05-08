@@ -29,7 +29,7 @@ async def get_session(req: Request):
     申请`session`的验证阶段
     :return :  ` {'code': 状态码, 'session_id': id}`
     '''
-    logging.debug(req.client)
+    logger.debug(req.client)
     session_id = sessionManager.newSession()
     return {'code': 200, 'session_id': session_id}
 
@@ -40,7 +40,7 @@ async def push_session(form: FormRaw, req: Request):
     正式上传`session`的信息
     :return :`{'code':状态码, 'url':session的信息页面url}`
     '''
-    logging.debug('%s ==========> %s', req.client, req.base_url.is_secure)
+    logger.debug('%s ==========> %s', req.client, req.base_url.is_secure)
     sessid = sessionManager.updateSessionInfoByRaw(form)
     return {'code': 200, 'url': f'{req.base_url}session/{sessid}'}
 
@@ -50,7 +50,7 @@ async def info_session(session_id: str, req: Request):
     '''
     获得`session_id`的执行信息
     '''
-    logging.debug('%s ==========> %s', session_id, req.client)
+    logger.debug('%s ==========> %s', session_id, req.client)
     stdout, stderr = sessionManager.getSessionOutPut(session_id)
     return {'code': 200, 'stdout': stdout, 'stderr': stderr}
 
@@ -69,7 +69,8 @@ async def view_session(session_id: str, req: Request):
     session = sessionManager.getSessionInfo(session_id)
     if session is None:
         return {'code': 404}
-    return templates.TemplateResponse('session.html', {'request': req, 'name': session.session_name, 'stdout': session.stdout_log, 'stderr': session.stderr_log})
+    stdout, stderr = sessionManager.getSessionOutPut(session_id)
+    return templates.TemplateResponse('session.html', {'request': req, 'name': session.session_name, 'stdout': stdout, 'stderr': stderr})
 
 
 @app.get('/test')

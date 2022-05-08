@@ -19,11 +19,11 @@ class ExecuteUnit:
             self.task = subprocess.Popen(
                 self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         except OSError as oserr:
-            logging.error(oserr)
+            logger.error(oserr)
         except ValueError as valerr:
-            logging.error(valerr)
-        logging.debug('[*] Start execute %s => %s',
-                      self.session_info.session_id, self.command)
+            logger.error(valerr)
+        logger.info('INFO:      Start execute %s => %s',
+                    self.session_info.session_id, self.command)
         pass
 
     def finished(self) -> bool:
