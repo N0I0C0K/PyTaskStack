@@ -1,0 +1,3 @@
+[submodule "PacketCrypto"]
+	path = PacketCrypto
+	url = https://github.com/N0I0C0K/PacketCrypto.git

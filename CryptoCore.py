@@ -1,10 +1,10 @@
 import os
 import rsa
-import base64
 import json
 from typing import *
 from utils import *
-import Crypto.Cipher.AES as CryCes
+
+import PacketCrypto.PacketCrypto as packetCrypto
 
 
 class CryptoCore:
@@ -18,6 +18,7 @@ class CryptoCore:
                 private_key = file.read()
         self.__privateKey = rsa.PrivateKey.load_pkcs1(
             private_key.encode('utf-8'))
+        packetCrypto.setPrivateKey(private_key)
         pass
 
     def DecodeFormRaw(self, form: FormRaw) -> SessionForm:
@@ -25,12 +26,8 @@ class CryptoCore:
         解码`FormRaw` -> `SessionForm`
         :return :`SessionForm`
         '''
-        aes_key = rsa.decrypt(base64.b64decode(form.key),
-                              self.__privateKey)
-        aes = CryCes.new(aes_key, CryCes.MODE_EAX,
-                         nonce=base64.b64decode(form.nonce))
-        plaintext = aes.decrypt(base64.b64decode(form.data)).decode()
-        data = json.loads(plaintext)
+        res, key = packetCrypto.decryptPacket(form.dict())
+        data = json.loads(res)
         sess = SessionForm.parse_obj(data)
         return sess
 
@@ -47,10 +44,10 @@ def generateRsa():
         file.write(pub.save_pkcs1())
 
 
-if __name__ == '__main__':
-    generateRsa()
-
 cryptoCore = CryptoCore()
 '''
 信息的加密解密
 '''
+if __name__ == '__main__':
+    # print(cryptoCore.DecodeFormRaw(FormRaw.parse_obj()))
+    ...
