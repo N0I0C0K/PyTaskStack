@@ -1,56 +1,17 @@
 import logging
 import sys
 from typing import *
-from pydantic import BaseModel
 from chardet import detect
-#from ExecuteUnit import ExecuteUnit
 
-__all__ = ['logger', 'SessionInfo', 'SessionForm',
-           'FormRaw', 'autoDecode', 'set_color']
+__all__ = ['logger',
+           'autoDecode', 'set_color']
 
 logging.basicConfig(filename='./log/test.log',
-                    level=logging.INFO, encoding='utf-8')
+                    level=logging.INFO, encoding='utf-8', datefmt="%Y-%m-%d-%H-%M-%S")
 logger = logging.getLogger()
 handler = logging.StreamHandler()
 handler.setLevel(logging.INFO)
 logger.addHandler(handler)
-
-
-class SessionInfo:
-    token: str = None
-    key: str = None
-    stdout_log: str = None
-    stderr_log: str = None
-    session_id: str = None
-    session_name: str = None
-    session_command: str = None
-    session_task: 'ExecuteUnit' = None
-
-    def __init__(self, *, attributes: dict = None) -> None:
-        '''
-        Session info的一个单元
-        '''
-        if attributes is not None:
-            self.__dict__.update(attributes)
-
-    def __str__(self) -> str:
-        return f'{self.session_id}:{self.session_name} => {self.session_command}'
-
-
-class SessionForm(BaseModel):
-    # key: str                        # 密钥
-    session_id: str                   # session id
-    session_name: str                 # 任务名称
-    session_command: str              # 任务需要执行的命令
-    stdout_log: Optional[str] = None  # 标准输出输出到哪个文件
-    stderr_log: Optional[str] = None  # 标准错误输出到哪个文件
-
-
-class FormRaw(BaseModel):
-    data: str
-    sign: str
-    key: str
-    nonce: str
 
 
 def autoDecode(s: bytes) -> str:
