@@ -24,7 +24,6 @@ class ExecuteUnit:
             logger.error(valerr)
         logger.info('INFO:      Start execute %s => %s',
                     self.session_info.session_id, self.command)
-        pass
 
     def finished(self) -> bool:
         return self.task and self.task.poll() is not None

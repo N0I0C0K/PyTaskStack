@@ -26,11 +26,12 @@ class SessionInfo:
     session_command: str = None
     session_task: 'ExecuteUnit' = None
 
-    def __init__(self) -> None:
+    def __init__(self, *, attributes: dict = None) -> None:
         '''
         Session info的一个单元
         '''
-        pass
+        if attributes is not None:
+            self.__dict__.update(attributes)
 
     def __str__(self) -> str:
         return f'{self.session_id}:{self.session_name} => {self.session_command}'

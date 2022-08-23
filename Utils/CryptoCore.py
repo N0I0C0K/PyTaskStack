@@ -2,7 +2,7 @@ import os
 import rsa
 import json
 from typing import *
-from utils import *
+from .utils import *
 
 import PacketCrypto.PacketCrypto as packetCrypto
 
@@ -19,7 +19,6 @@ class CryptoCore:
         self.__privateKey = rsa.PrivateKey.load_pkcs1(
             private_key.encode('utf-8'))
         packetCrypto.setPrivateKey(private_key)
-        pass
 
     def DecodeFormRaw(self, form: FormRaw) -> SessionForm:
         '''
@@ -48,6 +47,3 @@ cryptoCore = CryptoCore()
 '''
 信息的加密解密
 '''
-if __name__ == '__main__':
-    # print(cryptoCore.DecodeFormRaw(FormRaw.parse_obj()))
-    ...
