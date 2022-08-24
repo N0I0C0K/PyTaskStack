@@ -3,6 +3,7 @@ import secrets
 from .TaskUnit import TaskUnit
 from Utils import logger
 from ExecuteCore.ExecuteUnit import ExecuteUnit
+from Data import dataManager
 
 
 class Session:
@@ -25,3 +26,6 @@ class Session:
         self.exectue_unit = ExecuteUnit(self.task.command)
         if wait:
             self.exectue_unit.wait(timeout)
+
+    def close(self):
+        pass

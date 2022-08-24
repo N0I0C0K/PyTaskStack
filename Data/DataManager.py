@@ -1,5 +1,5 @@
-import sqlite3
-from threading import Lock
+from sqlalchemy import create_engine
+from .models import Base
 
 
 class DataManager:
@@ -7,8 +7,15 @@ class DataManager:
         '''
         数据管理, 采用sqllit进行数据储存
         '''
-        self.__conn = sqlite3.connect('data.db')
-        self.conn_lock = Lock()
+        self.engine = create_engine(
+            'sqlite:///data.db', echo=True, future=True)
+
+    def create_all_table(self):
+        Base.metadata.create_all(self.engine)
 
 
 dataManager = DataManager()
+'''
+数据管理单例
+负责数据的存储
+'''
