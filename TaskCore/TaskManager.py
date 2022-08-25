@@ -19,9 +19,9 @@ class TaskManager:
 
     def __init__(self) -> None:
         self.scheduler: BackgroundScheduler = BackgroundScheduler()
-        self.scheduler.modify_job
         self.tasks: Dict[TaskId, TaskUnit] = dict()
         self.sessions: Dict[SessionId, Session] = dict()
+        self.load_task_from_database()
 
     def load_task_from_database(self):
         logger.info('start load task from database')

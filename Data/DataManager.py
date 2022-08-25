@@ -11,6 +11,7 @@ class DataManager:
         '''
         self.engine = create_engine(
             'sqlite:///data.db', echo=True, future=True)
+        self.create_all_table()
 
     def get_session(self) -> Session:
         return Session(self.engine)

@@ -10,7 +10,7 @@ class ExecuteUnit:
         任务执行单元
         :param session_info:`Session`类, 提供session的信息 
         '''
-        assert len(command) > 3
+        assert len(command) > 0
         self.command = shlex.split(command)
         self.task = None
         self.__stdout = None
@@ -32,6 +32,8 @@ class ExecuteUnit:
             self.task.kill()
 
     def wait(self, timeout=None):
+        if not self.task:
+            return
         self.task.wait(timeout)
 
     @property

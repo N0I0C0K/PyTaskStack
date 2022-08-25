@@ -54,14 +54,13 @@ class TaskUnit:
 
     @active.setter
     def set_active(self, val: bool):
+        self.__active = val
         if not self.scheduler_job:
             return
-        self.__active = val
         if val:
             self.scheduler_job.resume()
         else:
             self.scheduler_job.pause()
-        self.scheduler_job.modify
 
     @staticmethod
     def create_by_task_info(task_info: TaskInfo) -> 'TaskUnit':
