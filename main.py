@@ -1,9 +1,9 @@
-from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 import uvicorn
-from typing import *
-from Utils.utils import *
+from fastapi import FastAPI
+
+from Api.TaskApi import taskapi
+
+from TaskCore import taskManager
 
 DEBUG = True
 
@@ -12,6 +12,8 @@ if DEBUG:
 else:
     app = FastAPI(docs_url=None, redoc_url=None)
 
+app.include_router(taskapi)
 
 if __name__ == '__main__':
+    taskManager.start()
     uvicorn.run(app, host='0.0.0.0', port=5555)

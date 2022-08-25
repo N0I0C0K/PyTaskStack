@@ -1,7 +1,7 @@
-import sqlite3
-import sqlalchemy
+# import sqlite3
+# import sqlalchemy
 
-from Data import dataManager
+# from Data import dataManager
 
 # conn = sqlite3.connect('./data.db')
 # conn.row_factory = sqlite3.Row
@@ -32,3 +32,6 @@ from Data import dataManager
 # '''
 
 # dataManager.create_all_table()
+
+from Api.utils import *
+print(make_response(CodeResponse.INVALID_TOKEN))

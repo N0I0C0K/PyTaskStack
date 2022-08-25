@@ -1,9 +1,8 @@
 # coding: utf-8
-from sqlalchemy import Column, Float, Text
+from sqlalchemy import Column, Float, Text, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 
 __all__ = ['SessionInfo', 'TaskInfo']
-
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -24,6 +23,7 @@ class TaskInfo(Base):
 
     id = Column(Text, primary_key=True)
     name = Column(Text, nullable=False)
+    active = Column(Boolean, nullable=False)
     create_time = Column(Float, nullable=False)
     command = Column(Text, nullable=False)
     crontab_exp = Column(Text, nullable=True)

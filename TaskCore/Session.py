@@ -4,6 +4,7 @@ from .TaskUnit import TaskUnit
 from Utils import logger
 from ExecuteCore.ExecuteUnit import ExecuteUnit
 from Data import dataManager
+from Data.models import SessionInfo
 
 
 class Session:
@@ -28,4 +29,12 @@ class Session:
             self.exectue_unit.wait(timeout)
 
     def close(self):
-        pass
+        '''
+        关闭一个session, 并且上传数据
+        '''
+        with dataManager.get_session() as sess:
+            session_info = SessionInfo(
+                id=self.id, invoke_time=self.invoke_time, task_id=self.task.id, std_out=self.exectue_unit.stdout,
+                std_err=self.exectue_unit.stderr)
+            sess.add(session_info)
+            sess.commit()

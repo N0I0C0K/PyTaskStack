@@ -7,7 +7,7 @@ __all__ = ['logger',
            'autoDecode', 'set_color']
 
 logging.basicConfig(filename='./log/test.log',
-                    level=logging.INFO, encoding='utf-8', datefmt="%Y-%m-%d-%H-%M-%S")
+                    level=logging.INFO, encoding='utf-8', format='%(asctime)s - %(levelname)s: %(message)s', datefmt="%Y-%m-%d-%H:%M:%S")
 logger = logging.getLogger()
 handler = logging.StreamHandler()
 handler.setLevel(logging.INFO)
