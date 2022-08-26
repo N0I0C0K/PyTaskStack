@@ -29,7 +29,8 @@ class TaskManager:
             stmt = select(TaskInfo)
             task: TaskInfo
             for task in sess.scalars(stmt):
-                logger.info('load %s: %s', task.id, task.name)
+                logger.info('load task => %s, %s, %s',
+                            task.id, task.name, task.command)
                 if task.crontab_exp is not None:
                     task_unit = TaskUnit.create_by_task_info(task)
                     cronTrigger = CronTrigger.from_crontab(

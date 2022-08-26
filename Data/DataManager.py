@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
-from sqlalchemy.engine import ScalarResult
+from sqlalchemy.engine import ScalarResult, Engine
+from sqlalchemy.log import rootlogger
+import logging
 from .models import Base
 
 
@@ -10,7 +12,8 @@ class DataManager:
         数据管理, 采用sqllit进行数据储存
         '''
         self.engine = create_engine(
-            'sqlite:///data.db', echo=True, future=True)
+            'sqlite:///data.db', echo=False, future=True)
+        rootlogger.setLevel(logging.ERROR)
         self.create_all_table()
 
     def get_session(self) -> Session:

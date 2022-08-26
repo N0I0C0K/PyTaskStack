@@ -7,8 +7,9 @@ __all__ = ['logger',
            'autoDecode', 'set_color']
 
 logging.basicConfig(filename='./log/test.log',
-                    level=logging.INFO, encoding='utf-8', format='%(asctime)s - %(levelname)s: %(message)s', datefmt="%Y-%m-%d-%H:%M:%S")
-logger = logging.getLogger()
+                    encoding='utf-8', format='%(asctime)s- %(levelname)s- "%(pathname)s:%(lineno)d":\n%(message)s', datefmt="%Y-%m-%d-%H:%M:%S")
+logger = logging.getLogger('PyTaskStack')
+logger.setLevel(logging.INFO)
 handler = logging.StreamHandler()
 handler.setLevel(logging.INFO)
 logger.addHandler(handler)
@@ -54,8 +55,3 @@ def set_color(s: str, color: COLOR) -> str:
     if color_support:
         return f"{color}{s}{COLOR.DEFAULT}"
     return s
-
-
-if __name__ == '__main__':
-    # print(autoDecode('张席是是假的吧就舍不得节哀顺便打不'.encode('gbk')))
-    pass

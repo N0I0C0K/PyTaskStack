@@ -22,7 +22,7 @@ class ExecuteUnit:
             logger.error(oserr)
         except ValueError as valerr:
             logger.error(valerr)
-        logger.info('INFO:      Start execute  => %s', self.command)
+        logger.info('Start execute  => %s', self.command)
 
     def finished(self) -> bool:
         return self.task and self.task.poll() is not None

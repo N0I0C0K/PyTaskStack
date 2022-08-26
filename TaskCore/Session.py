@@ -35,6 +35,6 @@ class Session:
         with dataManager.get_session() as sess:
             session_info = SessionInfo(
                 id=self.id, invoke_time=self.invoke_time, task_id=self.task.id, std_out=self.exectue_unit.stdout,
-                std_err=self.exectue_unit.stderr)
+                std_err=self.exectue_unit.stderr, command=self.task.command)
             sess.add(session_info)
             sess.commit()

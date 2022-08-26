@@ -25,7 +25,7 @@ class SessionInfo(Base):
     std_err = Column(Text, nullable=True)
 
     def __repr__(self) -> str:
-        return f'Session, {format_time(self.invoke_time)}, {id}=> command:{self.command} ,std_out:{self.std_out}, std_err:{self.std_err}'
+        return f'Session, {format_time(self.invoke_time)}, {self.id}=> "{self.command}" \nstd_out:{self.std_out} \nstd_err:{self.std_err}'
 
 
 class TaskInfo(Base):
@@ -39,4 +39,4 @@ class TaskInfo(Base):
     crontab_exp = Column(Text, nullable=True)
 
     def __repr__(self) -> str:
-        return f'Task {self.id} {self.name}=> create at:{format_time(self.create_time)}, {self.command}, {self.crontab_exp}, {self.active}'
+        return f'Task {self.id} {self.name}=> create at:{format_time(self.create_time)}, "{self.command}", {self.crontab_exp}, {self.active}'

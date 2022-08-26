@@ -61,6 +61,7 @@ def del_table(name):
     conn.commit()
 
 
-# del_table('SessionInfo')
-# print_all_session_info()
-print_all_task_info()
+# del_table('TaskInfo')
+print_all_session_info()
+# print_all_task_info()
+raise ValueError('aaa')
