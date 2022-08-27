@@ -16,3 +16,8 @@ class TaskUploadForm(TokenBase):
 
 class SessionQueryForm(TokenBase):
     session_id: List[str]
+
+
+class TaskQueryForm(TokenBase):
+    task_id: List[str]
+    require_active: Optional[bool] = False

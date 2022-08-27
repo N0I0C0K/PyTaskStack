@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
-from sqlalchemy.engine import ScalarResult, Engine
+from sqlalchemy.engine import ScalarResult
 from sqlalchemy.log import rootlogger
 import logging
 from .models import Base
@@ -18,6 +18,10 @@ class DataManager:
 
     def get_session(self) -> Session:
         return Session(self.engine)
+
+    @property
+    def session(self) -> Session:
+        return self.get_session()
 
     def create_all_table(self):
         Base.metadata.create_all(self.engine)

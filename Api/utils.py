@@ -43,13 +43,21 @@ def catch_error(func: Callable) -> Callable:
         re = None
         try:
             re = func(*args, **kwargs)
-            if isinstance(re, Coroutine):
-                re = asyncio.run(re)
         except Exception as err:
             return make_response(CodeResponse.UNKONOW_ERR, {'err_msg': str(err)})
         else:
             return re
-    return dec
+
+    @wraps(func)
+    async def async_dec(*args, **kwargs):
+        re = None
+        try:
+            re = await func(*args, **kwargs)
+        except Exception as err:
+            return make_response(CodeResponse.UNKONOW_ERR, {'err_msg': str(err)})
+        else:
+            return re
+    return async_dec if asyncio.coroutines.iscoroutinefunction(func) else dec
 
 
 def require_token(func: Callable[[TokenBase, ], Any]) -> Callable[[TokenBase, ], Any]:
@@ -63,7 +71,14 @@ def require_token(func: Callable[[TokenBase, ], Any]) -> Callable[[TokenBase, ],
             return make_response(CodeResponse.INVALID_TOKEN)
         else:
             re = func(*args, **kwargs)
-            if isinstance(re, Coroutine):
-                re = asyncio.run(re)
             return re
-    return dec
+
+    @wraps(func)
+    async def async_dec(*args, **kwargs):
+        token_form = find_type_arg(TokenBase, args, kwargs.values())
+        if not token_form or not auth_manager.verify_token(token_form.token):
+            return make_response(CodeResponse.INVALID_TOKEN)
+        else:
+            re = await func(*args, **kwargs)
+            return re
+    return async_dec if asyncio.coroutines.iscoroutinefunction(func) else dec

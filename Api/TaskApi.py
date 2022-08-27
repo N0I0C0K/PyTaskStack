@@ -1,9 +1,9 @@
 from Data import dataManager
-from Data.models import SessionInfo
+from Data.models import SessionInfo, TaskInfo
 from fastapi import APIRouter
 from TaskCore import taskManager
 
-from .models import SessionQueryForm, TaskUploadForm
+from .models import SessionQueryForm, TaskUploadForm, TaskQueryForm
 from .utils import *
 
 from typing import List
@@ -29,4 +29,20 @@ async def get_session_info(form: SessionQueryForm):
             sess_info = res.first()
             if sess_info:
                 res_list.append(sess_info)
+    return make_response(CodeResponse.SUCCESS, {'result': res_list})
+
+
+@taskapi.post('/gettaskinfo')
+@catch_error
+@require_token
+async def get_task_info(form: TaskQueryForm):
+    res_list: List[TaskInfo] = []
+    with dataManager.session as sess:
+        for task_id in form.task_id:
+            res = sess.query(TaskInfo).filter(TaskInfo.id == task_id)
+            if form.require_active:
+                res = res.filter(TaskInfo.active == True)
+            task_info = res.first()
+            if task_info:
+                res_list.append(task_info)
     return make_response(CodeResponse.SUCCESS, {'result': res_list})
