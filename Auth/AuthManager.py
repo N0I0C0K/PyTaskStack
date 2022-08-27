@@ -11,6 +11,8 @@ class AuthManager:
 
     def verify_token(self, token: str) -> str:
         # TODO verify_token
+        if len(token) < 3:
+            return False
         return True
 
 

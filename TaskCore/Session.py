@@ -7,9 +7,13 @@ from Data import dataManager
 from Data.models import SessionInfo
 
 
+DEFAULT_TIMEOUT = 60*10
+
+
 class Session:
     id: str
     invoke_time: float
+    finish_time: float
     exectue_unit: ExecuteUnit
 
     def __init__(self, task: TaskUnit) -> None:
@@ -22,7 +26,7 @@ class Session:
         logger.info("start new session, id => %s, task name => %s",
                     self.id, self.task.name)
 
-    def run(self, wait: bool = False, *, timeout=None):
+    def run(self, wait: bool = False, *, timeout=DEFAULT_TIMEOUT):
         self.invoke_time = time.time()
         self.exectue_unit = ExecuteUnit(self.task.command)
         if wait:
@@ -32,9 +36,16 @@ class Session:
         '''
         关闭一个session, 并且上传数据
         '''
+        logger.info('session %s completed', self.id)
+        self.finish_time = time.time()
         with dataManager.get_session() as sess:
             session_info = SessionInfo(
-                id=self.id, invoke_time=self.invoke_time, task_id=self.task.id, std_out=self.exectue_unit.stdout,
-                std_err=self.exectue_unit.stderr, command=self.task.command)
+                id=self.id,
+                invoke_time=self.invoke_time,
+                task_id=self.task.id,
+                std_out=self.exectue_unit.stdout,
+                std_err=self.exectue_unit.stderr,
+                command=self.task.command,
+                finish_time=self.finish_time)
             sess.add(session_info)
             sess.commit()

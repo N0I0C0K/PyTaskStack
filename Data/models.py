@@ -1,17 +1,17 @@
 # coding: utf-8
 from sqlalchemy import Column, Float, Text, Boolean
 from sqlalchemy.ext.declarative import declarative_base
-import time
+from Utils import format_time
 
 __all__ = ['SessionInfo', 'TaskInfo']
 
 
-def format_time(t: float) -> str:
-    return time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime(t))
-
-
 Base = declarative_base()
 metadata = Base.metadata
+
+
+def format_output(s: str) -> str:
+    return '- '+s.replace('\n', '\n- ')
 
 
 class SessionInfo(Base):
@@ -19,13 +19,23 @@ class SessionInfo(Base):
 
     id = Column(Text, primary_key=True)
     invoke_time = Column(Float, nullable=False)
+    finish_time = Column(Float, nullable=False)
     task_id = Column(Text, nullable=False)
     command = Column(Text, nullable=False)
     std_out = Column(Text, nullable=True)
     std_err = Column(Text, nullable=True)
 
     def __repr__(self) -> str:
-        return f'Session, {format_time(self.invoke_time)}, {self.id}=> "{self.command}" \nstd_out:{self.std_out} \nstd_err:{self.std_err}'
+        return f'''======== Session {self.id} ========
+execute time   : {format_time(self.invoke_time)}-{format_time(self.finish_time)}
+execute command: {self.command}
+task id        : {self.task_id}
+std_out:
+{format_output(self.std_out)}
+std_err:
+{format_output(self.std_err)}
+======== End ========
+'''
 
 
 class TaskInfo(Base):
