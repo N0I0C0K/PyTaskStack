@@ -1,6 +1,7 @@
 import secrets
 import time
 from apscheduler.job import Job
+from apscheduler.triggers.cron import CronTrigger
 from Data import dataManager
 from Data.models import *
 
@@ -35,7 +36,13 @@ class TaskUnit:
         如果数据库不存在当前task就创建, 否则更新.
         '''
         if dataManager.has_item_by_id(TaskInfo, self.id):
-            # TODO 更新操作
+            with dataManager.session as sess:
+                res = sess.query(TaskInfo).filter(TaskInfo.id == self.id)
+                info: TaskInfo = res.first()
+                assert info is not None
+                info.name = self.name
+                info.crontab_exp = self.crontab_exp
+                info.active = self.active
             pass
         else:
             with dataManager.get_session() as sess:
@@ -47,6 +54,14 @@ class TaskUnit:
                                      active=self.active)
                 sess.add(task_info)
                 sess.commit()
+
+    def set_crontab_exp(self, new_crontab_exp: str):
+        if self.scheduler_job is None:
+            return
+        if new_crontab_exp == self.crontab_exp:
+            return
+        new_trigger = CronTrigger.from_crontab(new_crontab_exp)
+        self.scheduler_job.trigger = new_trigger
 
     @property
     def active(self) -> bool:

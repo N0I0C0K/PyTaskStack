@@ -24,13 +24,15 @@ def make_response(code: CodeResponse, data: Optional[dict] = None) -> dict:
 T = TypeVar('T')
 
 
-def find_type_arg(type: T, *args) -> T:
+def find_type_arg(type: T, *args, raise_err: bool = True) -> T:
     for it in args:
         if not isinstance(it, Iterable):
             continue
         for t in it:
             if isinstance(t, type):
                 return t
+    if raise_err:
+        raise ValueError(f'could not find object of {type} in {args}')
     return None
 
 
@@ -64,6 +66,7 @@ def require_token(func: Callable[[TokenBase, ], Any]) -> Callable[[TokenBase, ],
     '''
     token验证
     '''
+    # TODO 第一次找到参数之后可以记住位置, 第二次不再寻找
     @wraps(func)
     def dec(*args, **kwargs):
         token_form = find_type_arg(TokenBase, args, kwargs.values())

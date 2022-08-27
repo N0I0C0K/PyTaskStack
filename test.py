@@ -3,31 +3,32 @@ from Data import dataManager
 from sqlalchemy import select
 from Data.models import SessionInfo, TaskInfo
 import asyncio
+import time
 
 
 def print_all_session_info():
+    print('5')
     with dataManager.get_session() as sess:
         stmt = select(SessionInfo)
         for ses in sess.scalars(stmt):
             print(ses)
+    print('6')
 
 
-async def print_all_task_info():
+def print_all_task_info():
     print('1')
     with dataManager.get_session() as sess:
         stmt = select(TaskInfo)
         for ses in sess.scalars(stmt):
             print(ses)
-    await asyncio.sleep(2)
     print('2')
 
 
-async def get_all_session_info():
+def get_all_session_info():
     print('3')
     with dataManager.get_session() as sess:
         res = sess.query(SessionInfo)
         print('\n'.join(map(str, res.all())))
-    await asyncio.sleep(2)
     print('4')
 
 
@@ -47,14 +48,48 @@ print('test')
 # get_all_session_info()
 
 
-async def main():
-    print(
-        asyncio.coroutines.iscoroutinefunction(print_all_task_info))
-    task = asyncio.create_task(print_all_task_info())
-    task2 = asyncio.create_task(get_all_session_info())
-    await task
-    await task2
+# async def get_2():
+#     print('5')
+#     await asyncio.sleep(1)
+#     with dataManager.get_session() as sess:
+#         stmt = select(SessionInfo)
+#         for ses in sess.scalars(stmt):
+#             print(ses)
+#     print('6')
 
-    pass
 
-asyncio.run(main())
+# async def get_1():
+#     print('1')
+#     await asyncio.sleep(1)
+#     with dataManager.get_session() as sess:
+#         stmt = select(TaskInfo)
+#         for ses in sess.scalars(stmt):
+#             print(ses)
+#     print('2')
+
+
+# async def main():
+#     task2 = asyncio.create_task(get_1())
+#     task = asyncio.create_task(get_2())
+#     await task2
+#     await task
+
+#     pass
+
+# asyncio.run(main())
+
+class TestA:
+    def a(self):
+        print('a')
+        del self
+
+    def __del__(self):
+        print('del')
+
+
+a = TestA()
+a.a()
+print(a)
+a = '123'
+print(a)
+print('end')

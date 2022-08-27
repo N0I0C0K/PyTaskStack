@@ -14,10 +14,22 @@ class TaskUploadForm(TokenBase):
     crontab_exp: Optional[str]
 
 
+class TaskQueryForm(TokenBase):
+    task_id: List[str]
+    require_active: Optional[bool] = False
+
+
+class TaskDelForm(TokenBase):
+    task_id: List[str]
+
+
 class SessionQueryForm(TokenBase):
     session_id: List[str]
 
 
-class TaskQueryForm(TokenBase):
+class SessionQueryByTaskForm(TokenBase):
     task_id: List[str]
-    require_active: Optional[bool] = False
+
+
+class SessionDelForm(TokenBase):
+    session_id: List[str]

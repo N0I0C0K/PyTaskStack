@@ -4,7 +4,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from Data import dataManager
 from Data.models import TaskInfo
-from sqlalchemy import select
 from Utils import logger
 
 from .Session import Session
@@ -26,9 +25,9 @@ class TaskManager:
     def load_task_from_database(self):
         logger.info('start load task from database')
         with dataManager.get_session() as sess:
-            stmt = select(TaskInfo)
+            stmt = sess.query(TaskInfo)
             task: TaskInfo
-            for task in sess.scalars(stmt):
+            for task in stmt.all():
                 logger.info('load task => %s, %s, %s',
                             task.id, task.name, task.command)
                 if task.crontab_exp is not None:
@@ -40,25 +39,30 @@ class TaskManager:
                     task_unit.scheduler_job = job
                     self.tasks[task_unit.id] = task_unit
 
-    def add_task(self, task_command, crontab_exp: Optional[str] = None, task_name: Optional[str] = None):
-        logger.info('add new task, command: %s', task_command)
-        if not crontab_exp:
-            # TODO 无cron表达式, 立马执行命令
-            return
+    def add_cron_task(self, task_command, crontab_exp: str, task_name: Optional[str] = None):
         cronTrigger = CronTrigger.from_crontab(crontab_exp)
         task = TaskUnit(task_command, task_name=task_name,
                         crontab_exp=crontab_exp)
         job = self.scheduler.add_job(
             self.run_task, trigger=cronTrigger, name=task.name, id=task.id, args=(task,))
         task.scheduler_job = job
-
         self.tasks[task.id] = task
+        logger.info('add new task, %s-%s: %s',
+                    task.name, task.id, task_command)
 
-    def run_task(self, task: TaskUnit):
+    def run_temp_task(self, task_command: str) -> SessionId:
+        task = TaskUnit(task_command)
+        sess = self.run_task(task, False)
+        return sess.id
+
+    def run_task(self, task: TaskUnit, is_sync: bool = True) -> Session:
         session = Session(task)
-        session.run(True)
-        session.close()
-        del session
+        session.run(is_sync)
+        if is_sync:
+            session.close()
+            return session
+        else:
+            return session
 
     def start(self):
         '''
@@ -79,14 +83,14 @@ class TaskManager:
         暂停一个Task
         '''
         assert task_id in self.tasks
-        self.tasks[task_id].scheduler_job.pause()
+        self.tasks[task_id].active = False
 
     def resume_task_by_id(self, task_id: TaskId):
         '''
         重启一个Task
         '''
         assert task_id in self.tasks
-        self.tasks[task_id].scheduler_job.resume()
+        self.tasks[task_id].active = True
 
 
 taskManager = TaskManager()

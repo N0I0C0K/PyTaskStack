@@ -28,14 +28,8 @@ class DataManager:
 
     def has_item_by_id(self, tarType: Base, tar_id: str) -> bool:
         with self.get_session() as sess:
-            stmt = select(tarType).where(tarType.id == tar_id)
-            res: ScalarResult = sess.scalars(stmt)
-            try:
-                res.one()
-            except:
-                return False
-            else:
-                return True
+            res = sess.query(tarType).filter(tarType.id == tar_id)
+            return res.first() is not None
 
 
 dataManager = DataManager()
