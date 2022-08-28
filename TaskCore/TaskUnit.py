@@ -29,6 +29,7 @@ class TaskUnit:
         self.name = task_name if task_name else generate_name_by_data()
         self.crontab_exp = crontab_exp
         self.create_time = create_time if create_time else time.time()
+        self.__active = crontab_exp is not None
         self.save()
 
     def save(self):
@@ -43,7 +44,7 @@ class TaskUnit:
                 info.name = self.name
                 info.crontab_exp = self.crontab_exp
                 info.active = self.active
-            pass
+                sess.commit()
         else:
             with dataManager.get_session() as sess:
                 task_info = TaskInfo(id=self.id,
@@ -62,6 +63,8 @@ class TaskUnit:
             return
         new_trigger = CronTrigger.from_crontab(new_crontab_exp)
         self.scheduler_job.trigger = new_trigger
+        self.crontab_exp = new_crontab_exp
+        self.save()
 
     @property
     def active(self) -> bool:
@@ -69,6 +72,8 @@ class TaskUnit:
 
     @active.setter
     def set_active(self, val: bool):
+        if val == self.__active:
+            return
         self.__active = val
         if not self.scheduler_job:
             return
@@ -76,9 +81,13 @@ class TaskUnit:
             self.scheduler_job.resume()
         else:
             self.scheduler_job.pause()
+        self.save()
 
     @staticmethod
     def create_by_task_info(task_info: TaskInfo) -> 'TaskUnit':
         task = TaskUnit(task_info.command, task_name=task_info.name,
                         task_id=task_info.id, create_time=task_info.create_time, crontab_exp=task_info.crontab_exp)
         return task
+
+    def __del__(self):
+        self.save()

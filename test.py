@@ -48,48 +48,34 @@ print('test')
 # get_all_session_info()
 
 
-# async def get_2():
-#     print('5')
-#     await asyncio.sleep(1)
-#     with dataManager.get_session() as sess:
-#         stmt = select(SessionInfo)
-#         for ses in sess.scalars(stmt):
-#             print(ses)
-#     print('6')
+async def switch():
+    await asyncio.sleep(0)
 
 
-# async def get_1():
-#     print('1')
-#     await asyncio.sleep(1)
-#     with dataManager.get_session() as sess:
-#         stmt = select(TaskInfo)
-#         for ses in sess.scalars(stmt):
-#             print(ses)
-#     print('2')
+async def get_2():
+    print('5')
+    await asyncio.sleep(0)
+    print('6')
+    await asyncio.sleep(0)
+    print('7')
+    await asyncio.sleep(0)
+    print('8')
 
 
-# async def main():
-#     task2 = asyncio.create_task(get_1())
-#     task = asyncio.create_task(get_2())
-#     await task2
-#     await task
-
-#     pass
-
-# asyncio.run(main())
-
-class TestA:
-    def a(self):
-        print('a')
-        del self
-
-    def __del__(self):
-        print('del')
+async def get_1():
+    i = 10
+    while i < 20:
+        print(i)
+        await asyncio.sleep(0)
+        i += 1
 
 
-a = TestA()
-a.a()
-print(a)
-a = '123'
-print(a)
-print('end')
+async def main():
+    task2 = asyncio.create_task(get_1())
+    task = asyncio.create_task(get_2())
+    await task2
+    await task
+
+    pass
+
+asyncio.run(main())

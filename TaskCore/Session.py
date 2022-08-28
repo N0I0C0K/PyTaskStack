@@ -23,8 +23,12 @@ class Session:
         self.task = task
         self.id = secrets.token_hex(8)
         self.exectue_unit = None
+        self.closed = False
         logger.info("start new session, id => %s, task name => %s",
                     self.id, self.task.name)
+
+    def __hash__(self) -> int:
+        return hash(self.id)
 
     def run(self, wait: bool = False, *, timeout=DEFAULT_TIMEOUT):
         self.invoke_time = time.time()
@@ -36,6 +40,8 @@ class Session:
         '''
         关闭一个session, 并且上传数据
         '''
+        if self.closed:
+            return
         logger.info('session %s completed', self.id)
         self.finish_time = time.time()
         with dataManager.get_session() as sess:
@@ -49,3 +55,7 @@ class Session:
                 finish_time=self.finish_time)
             sess.add(session_info)
             sess.commit()
+        self.closed = True
+
+    def __del__(self):
+        self.close()

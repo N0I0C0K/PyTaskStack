@@ -19,7 +19,7 @@ class TaskManager:
     def __init__(self) -> None:
         self.scheduler: BackgroundScheduler = BackgroundScheduler()
         self.tasks: Dict[TaskId, TaskUnit] = dict()
-        self.sessions: Dict[SessionId, Session] = dict()
+        self.session_runing: Dict[SessionId, Session] = dict()
         self.load_task_from_database()
 
     def load_task_from_database(self):
@@ -57,9 +57,11 @@ class TaskManager:
 
     def run_task(self, task: TaskUnit, is_sync: bool = True) -> Session:
         session = Session(task)
+        self.session_runing[session.id] = session
         session.run(is_sync)
         if is_sync:
             session.close()
+            self.session_runing.pop(session.id)
             return session
         else:
             return session
@@ -91,6 +93,9 @@ class TaskManager:
         '''
         assert task_id in self.tasks
         self.tasks[task_id].active = True
+
+    def update_session_state(self):
+        pass
 
 
 taskManager = TaskManager()
