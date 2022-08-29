@@ -36,17 +36,14 @@ class TaskUnit:
         '''
         如果数据库不存在当前task就创建, 否则更新.
         '''
-        if dataManager.has_item_by_id(TaskInfo, self.id):
-            with dataManager.session as sess:
-                res = sess.query(TaskInfo).filter(TaskInfo.id == self.id)
-                info: TaskInfo = res.first()
-                assert info is not None
+        with dataManager.session as sess:
+            res = sess.query(TaskInfo).filter(TaskInfo.id == self.id)
+            info: TaskInfo = res.first()
+            if info is not None:
                 info.name = self.name
                 info.crontab_exp = self.crontab_exp
                 info.active = self.active
-                sess.commit()
-        else:
-            with dataManager.get_session() as sess:
+            else:
                 task_info = TaskInfo(id=self.id,
                                      name=self.name,
                                      create_time=self.create_time,
@@ -54,7 +51,7 @@ class TaskUnit:
                                      crontab_exp=self.crontab_exp,
                                      active=self.active)
                 sess.add(task_info)
-                sess.commit()
+            sess.commit()
 
     def set_crontab_exp(self, new_crontab_exp: str):
         if self.scheduler_job is None:

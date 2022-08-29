@@ -28,6 +28,4 @@ def main_func():
 
 
 if __name__ == '__main__':
-    # taskManager.start()
-    # uvicorn.run(app, host='0.0.0.0', port=5555)
     main_func()

@@ -44,7 +44,7 @@ def del_table(name):
 print('test')
 
 # del_table('SessionInfo')
-# print_all_session_info()
+print_all_session_info()
 # print_all_task_info()
 # get_all_session_info()
 
@@ -83,28 +83,28 @@ print('test')
 
 # asyncio.run(main())
 
-class MyJsonEncoder(json.JSONEncoder):
-    def default(self, o: object):
-        try:
-            return o.__getattribute__('__json__')()
-        except AttributeError:
-            return super().default(o)
+# class MyJsonEncoder(json.JSONEncoder):
+#     def default(self, o: object):
+#         try:
+#             return o.__getattribute__('__json__')()
+#         except AttributeError:
+#             return super().default(o)
 
 
-class A:
-    a = 1
-    b = 2
-    c = 3
-    child: 'A' = None
+# class A:
+#     a = 1
+#     b = 2
+#     c = 3
+#     child: 'A' = None
 
-    def __json__(self) -> dict:
-        return {'a': self.a, 'b': self.b, 'child': self.child}
+#     def __json__(self) -> dict:
+#         return {'a': self.a, 'b': self.b, 'child': self.child}
 
-    def __repr__(self) -> str:
-        return str({'a': self.a, 'b': self.b})
+#     def __repr__(self) -> str:
+#         return str({'a': self.a, 'b': self.b})
 
 
-a = A()
-b = A()
-a.child = b
-print(json.dumps(a, cls=MyJsonEncoder))
+# a = A()
+# b = A()
+# a.child = b
+# print(json.dumps(a, cls=MyJsonEncoder))

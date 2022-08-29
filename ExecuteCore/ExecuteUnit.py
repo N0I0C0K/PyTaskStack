@@ -43,7 +43,7 @@ class ExecuteUnit:
         if self.task is None:
             return ''
         if not self.finished():
-            logger.warning("attempt to access not finished process")
+            logger.debug("attempt to access not finished process")
             return ''
         self.__stdout = autoDecode(self.task.stdout.read())
         return self.__stdout
@@ -55,7 +55,7 @@ class ExecuteUnit:
         if self.task is None:
             return ''
         if not self.finished():
-            logger.warning("attempt to access not finished process")
+            logger.debug("attempt to access not finished process")
             return ''
         self.__stderr = autoDecode(self.task.stderr.read())
         return self.__stderr

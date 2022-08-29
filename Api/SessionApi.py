@@ -50,6 +50,19 @@ async def del_session(form: SessionDelForm):
     return make_response(CodeResponse.SUCCESS, {'del_nums': nums})
 
 
+@sessionapi.post('/stop')
+@catch_error
+@require_token
+async def stop_session(form: SessionQueryForm):
+    success_list = []
+    for sess_id in form.session_id:
+        if sess_id in taskManager.session_runing:
+            if taskManager.session_runing[sess_id].stop():
+                success_list.append(sess_id)
+    make_response(CodeResponse.SUCCESS, {
+                  'success_list': success_list, 'success_nums': len(success_list)})
+
+
 @sessionapi.get('/info/{session_id}')
 async def get_one_session(session_id: str):
     with dataManager.session as sess:

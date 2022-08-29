@@ -33,7 +33,7 @@ class Session:
     def run(self, wait: bool = False, *, timeout=DEFAULT_TIMEOUT):
         self.invoke_time = time.time()
         self.exectue_unit = ExecuteUnit(self.task.command)
-        logger.info('session %s start run at %s', self.id,
+        logger.info('session %s - | %s | start run at %s', self.id, self.task.command,
                     format_time(self.invoke_time))
         self.save()
         if wait:
@@ -42,6 +42,12 @@ class Session:
             except Exception as err:
                 logger.error(err)
                 self.exectue_unit.kill()
+
+    def stop(self) -> bool:
+        if self.exectue_unit is None:
+            return False
+        self.exectue_unit.kill()
+        return True
 
     def save(self):
         with dataManager.get_session() as sess:
@@ -73,8 +79,9 @@ class Session:
         '''
         if self.closed:
             return
-        logger.info('session %s completed', self.id)
         self.finish_time = time.time()
+        logger.info('session %s - | %s | completed at %s', self.id, self.task.command,
+                    format_time(self.finish_time))
         self.closed = True
         self.save()
 
