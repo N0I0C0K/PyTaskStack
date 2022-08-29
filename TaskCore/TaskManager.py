@@ -1,4 +1,5 @@
 import typing
+import asyncio
 from typing import Dict, Optional
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -20,6 +21,7 @@ class TaskManager:
         self.scheduler: BackgroundScheduler = BackgroundScheduler()
         self.tasks: Dict[TaskId, TaskUnit] = dict()
         self.session_runing: Dict[SessionId, Session] = dict()
+        self.task_update: asyncio.Task = None
         self.load_task_from_database()
 
     def load_task_from_database(self):
@@ -66,11 +68,14 @@ class TaskManager:
         else:
             return session
 
-    def start(self):
+    def start(self, loop: asyncio.AbstractEventLoop = None):
         '''
         开始任务自动化
         '''
         logger.info('start scheduler')
+        if loop:
+            self.task_update = loop.create_task(
+                self.update_session_state())
         self.scheduler.start()
 
     def pause(self):
@@ -94,8 +99,14 @@ class TaskManager:
         assert task_id in self.tasks
         self.tasks[task_id].active = True
 
-    def update_session_state(self):
-        pass
+    async def update_session_state(self):
+        while True:
+            sess_ids = tuple(self.session_runing.keys())
+            for sess_id in sess_ids:
+                if self.session_runing[sess_id].finished:
+                    sess = self.session_runing.pop(sess_id)
+                    sess.close()
+            await asyncio.sleep(0.1)
 
 
 taskManager = TaskManager()

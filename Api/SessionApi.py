@@ -2,8 +2,10 @@ from Data import dataManager
 from Data.models import SessionInfo
 from fastapi import APIRouter
 
-from .models import SessionQueryForm, SessionQueryByTaskForm, SessionDelForm
+from .models import SessionQueryForm, SessionQueryByTaskForm, SessionDelForm, TokenBase
 from .utils import *
+from TaskCore import taskManager
+
 
 from typing import List, Dict
 sessionapi = APIRouter(prefix='/session')
@@ -53,3 +55,12 @@ async def get_one_session(session_id: str):
     with dataManager.session as sess:
         res = sess.query(SessionInfo).filter(SessionInfo.id == session_id)
     return make_response(CodeResponse.SUCCESS, {'result': res.first()})
+
+
+@sessionapi.post('/runningsession/get')
+@catch_error
+@require_token
+async def get_all_running_session(form: TokenBase):
+    with dataManager.session as sess:
+        res = sess.query(SessionInfo).filter(SessionInfo.finish_time == 0)
+    return make_response(CodeResponse.SUCCESS, {'result': res.all()})

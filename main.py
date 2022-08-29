@@ -17,6 +17,17 @@ else:
 app.include_router(taskapi)
 app.include_router(sessionapi)
 
+
+def main_func():
+    from uvicorn import Config, Server
+    main_loop = asyncio.new_event_loop()
+    config = Config(app, '0.0.0.0', 5555, loop=main_loop)
+    server = Server(config=config)
+    taskManager.start(main_loop)
+    main_loop.run_until_complete(server.serve())
+
+
 if __name__ == '__main__':
-    taskManager.start()
-    uvicorn.run(app, host='0.0.0.0', port=5555)
+    # taskManager.start()
+    # uvicorn.run(app, host='0.0.0.0', port=5555)
+    main_func()

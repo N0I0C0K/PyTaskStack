@@ -1,11 +1,13 @@
+import json
 import logging
 import sys
 import time
 from typing import *
+
 from chardet import detect
 
 __all__ = ['logger',
-           'autoDecode', 'set_color','format_time']
+           'autoDecode', 'set_color', 'format_time']
 
 logging.basicConfig(filename='./log/test.log',
                     encoding='utf-8', format='%(asctime)s- %(levelname)s- "%(pathname)s:%(lineno)d":\n%(message)s', datefmt="%Y-%m-%d-%H:%M:%S")
@@ -14,6 +16,14 @@ logger.setLevel(logging.INFO)
 handler = logging.StreamHandler()
 handler.setLevel(logging.INFO)
 logger.addHandler(handler)
+
+
+class MyJsonEncoder(json.JSONEncoder):
+    def default(self, o: object) -> Any:
+        try:
+            return o.__getattribute__('__json__')
+        except AttributeError:
+            return super().default(o)
 
 
 def format_time(t: float) -> str:
