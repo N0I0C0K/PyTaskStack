@@ -3,8 +3,10 @@ from fastapi import FastAPI
 
 from Api.TaskApi import taskapi
 from Api.SessionApi import sessionapi
+from Api.UserAuthApi import user_auth_api
 
 from TaskCore import taskManager
+from Auth import auth_manager
 import asyncio
 
 DEBUG = True
@@ -16,6 +18,7 @@ else:
 
 app.include_router(taskapi)
 app.include_router(sessionapi)
+app.include_router(user_auth_api)
 
 
 def main_func():
@@ -24,6 +27,7 @@ def main_func():
     config = Config(app, '0.0.0.0', 5555, loop=main_loop)
     server = Server(config=config)
     taskManager.start(main_loop)
+    auth_manager.start_check_token_process(main_loop)
     main_loop.run_until_complete(server.serve())
 
 

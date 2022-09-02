@@ -33,3 +33,8 @@ class SessionQueryByTaskForm(TokenBase):
 
 class SessionDelForm(TokenBase):
     session_id: List[str]
+
+
+class UserForm(BaseModel):
+    username: str
+    pwd: str

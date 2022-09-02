@@ -1,5 +1,5 @@
 # coding: utf-8
-from sqlalchemy import Column, Float, Text, Boolean
+from sqlalchemy import Column, Float, Text, Boolean, Integer, Table
 from sqlalchemy.ext.declarative import declarative_base
 from Utils import format_time
 
@@ -50,3 +50,12 @@ class TaskInfo(Base):
 
     def __repr__(self) -> str:
         return f'Task {self.id} {self.name}=> create at:{format_time(self.create_time)}, "{self.command}", {self.crontab_exp}, {self.active}'
+
+
+class UserInfo(Base):
+    __tablename__ = 'User'
+
+    username = Column(Text, primary_key=True)
+    pwd = Column(Text, nullable=False)
+    salt = Column(Text, nullable=False)
+    create_time = Column(Float, nullable=False)

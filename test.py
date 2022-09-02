@@ -6,6 +6,8 @@ from Data.models import SessionInfo, TaskInfo
 import asyncio
 import time
 
+from re import match
+
 
 def print_all_session_info():
     print('5')
@@ -43,8 +45,14 @@ def del_table(name):
 
 print('test')
 
+# dataManager.remove_all_table()
+
+# while True:
+#     username = input('>')
+#     print(match(r'^[a-zA-Z0-9]{4,15}$', username))
+
 # del_table('SessionInfo')
-print_all_session_info()
+# print_all_session_info()
 # print_all_task_info()
 # get_all_session_info()
 

@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, select
+from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.engine import ScalarResult
 from sqlalchemy.log import rootlogger
@@ -25,6 +25,10 @@ class DataManager:
 
     def create_all_table(self):
         Base.metadata.create_all(self.engine)
+
+    def remove_all_table(self):
+        Base.metadata.drop_all(self.engine)
+            
 
     def has_item_by_id(self, tarType: Base, tar_id: str) -> bool:
         with self.get_session() as sess:
