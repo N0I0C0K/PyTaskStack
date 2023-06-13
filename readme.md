@@ -1,8 +1,8 @@
 # Python 本地任务分发中心服务
 
-> PyTaskStack
+## 此项目已经重构，新项目[地址](https://github.com/N0I0C0K/TaskStack)
 
-# 开发中...
+> PyTaskStack
 
 ## 目前进度
 
